@@ -1,0 +1,22 @@
+/* App.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+.p-6 {
+    padding: 1.5rem;
+}
+
+.my-3 {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+}
