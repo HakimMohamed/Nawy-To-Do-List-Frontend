@@ -1,8 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import DashboardPage from "./pages/DashboardPage";
-import ProjectsPage from "./pages/ProjectsPage";
-import CalendarPage from "./pages/CalendarPage";
+import AllPage from "./pages/All";
 import TasksPage from "./pages/TasksPage";
 import ReportingPage from "./pages/ReportingPage";
 import SettingsPage from "./pages/SettingsPage";
@@ -14,12 +13,10 @@ import {
   LayoutDashboard,
   StickyNote,
   Layers,
-  Calendar,
   LifeBuoy,
   Settings,
 } from "lucide-react";
-import "./App.css"; // Import the global styles including MessageBox styles
-import MessageBox from "./components/MessageBox/MessageBox";
+import "./App.css";
 
 export default function App() {
   return (
@@ -39,14 +36,9 @@ export default function App() {
           />
           <SidebarItem
             icon={<StickyNote size={20} />}
-            text="Projects"
-            to="/projects"
+            text="All"
+            to="/all"
             alert
-          />
-          <SidebarItem
-            icon={<Calendar size={20} />}
-            text="Calendar"
-            to="/calendar"
           />
           <SidebarItem icon={<Layers size={20} />} text="Tasks" to="/tasks" />
           <hr className="my-3" />
@@ -62,8 +54,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/all" element={<AllPage />} />
             <Route path="/tasks" element={<TasksPage />} />
             <Route path="/reporting" element={<ReportingPage />} />
             <Route path="/settings" element={<SettingsPage />} />
@@ -72,7 +63,6 @@ export default function App() {
           </Routes>
         </div>
       </div>
-      <MessageBox />
     </Router>
   );
 }
