@@ -35,7 +35,7 @@ const CustomCard = ({ title, time, index }) => {
         },
         "&:hover": {
           backgroundColor: "#f0f0f0",
-          transform: "scale(1.05)",
+          transform: "scale(1.02)",
         },
       }}
     >
