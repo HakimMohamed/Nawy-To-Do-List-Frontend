@@ -19,7 +19,7 @@ const CustomCard = ({ title, time, index }) => {
         alignItems: "center",
         p: 2,
         width: "100%",
-        maxWidth: "1200px",
+        maxWidth: "1500px",
         borderRadius: 8,
         boxShadow: "none",
         border: "1px solid #e0e0e0",
