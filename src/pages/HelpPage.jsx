@@ -10,22 +10,26 @@ import { PhotoCamera } from "@mui/icons-material";
 
 export default function HelpPage() {
   return (
-    <Container maxWidth="sm">
+    <Container
+      maxWidth="sm"
+      sx={{ display: "flex", justifyContent: "flex-start" }}
+    >
       <Box
         component="form"
         sx={{
           backgroundColor: "white",
-          width: "50vw",
-          md: "50vw",
+          width: "100%",
           padding: 3,
           borderRadius: 2,
           boxShadow: 3,
-          mx: "auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
         }}
         noValidate
         autoComplete="off"
       >
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 7, width: "100%" }}>
           <Typography
             variant="h6"
             component="label"
@@ -51,7 +55,7 @@ export default function HelpPage() {
             }}
           />
         </Box>
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 3, width: "100%" }}>
           <Typography
             variant="h6"
             component="label"
@@ -84,6 +88,7 @@ export default function HelpPage() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            width: "100%",
           }}
         >
           <Button
@@ -91,7 +96,6 @@ export default function HelpPage() {
             variant="contained"
             color="primary"
             sx={{
-              backgroundColor: "blue",
               fontWeight: "bold",
               "&:hover": {
                 backgroundColor: "darkblue",
