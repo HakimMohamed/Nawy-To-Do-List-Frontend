@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { Card, Typography, Box, IconButton, Checkbox } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import CircleIcon from "@mui/icons-material/Circle";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-const CustomCard = ({ title, time, index }) => {
+const TaskComponent = ({ title, time, index }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -11,6 +14,10 @@ const CustomCard = ({ title, time, index }) => {
     }, index * 100);
     return () => clearTimeout(timer);
   }, [index]);
+
+  const handleCheckboxChange = () => {
+    setIsChecked((prev) => !prev);
+  };
 
   return (
     <Card
@@ -28,6 +35,7 @@ const CustomCard = ({ title, time, index }) => {
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(20px)",
         transition: "opacity 0.5s ease, transform 0.5s ease",
+        backgroundColor: isChecked ? "#f0f0f0" : "none",
         mb: 2,
         "@media (max-width: 600px)": {
           p: 1,
@@ -40,12 +48,37 @@ const CustomCard = ({ title, time, index }) => {
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
-        <Checkbox sx={{ mr: 1 }} />
+        <Checkbox
+          icon={
+            <CircleIcon
+              sx={{
+                color: "white",
+                backgroundColor: "grey",
+                borderRadius: "50%",
+              }}
+            />
+          }
+          checkedIcon={<CheckCircleIcon />}
+          sx={{
+            mr: 1,
+            width: "24px",
+            height: "24px",
+            padding: 0,
+            "& .MuiSvgIcon-root": {
+              fontSize: "24px",
+            },
+          }}
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+        />
+
         <Typography
           variant="body1"
           sx={{
             display: "flex",
             alignItems: "center",
+            color: isChecked ? "grey" : "inherit",
+            textDecoration: isChecked ? "line-through" : "none",
             "@media (max-width: 600px)": {
               fontSize: "0.875rem",
             },
@@ -107,4 +140,4 @@ const CustomCard = ({ title, time, index }) => {
   );
 };
 
-export default CustomCard;
+export default TaskComponent;
