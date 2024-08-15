@@ -1,34 +1,66 @@
+import { useState } from "react";
 import CustomCard from "../components/tasks/task";
 import { Box } from "@mui/material";
+import _ from "lodash";
 
-const mockData = [
+const initialData = [
   {
+    _id: 1,
     title: "Client Review & Feedback",
     time: "Today 10:00 PM - 11:45 PM",
-    participants: [
-      { name: "Person 1", src: "https://via.placeholder.com/40" },
-      { name: "Person 2", src: "https://via.placeholder.com/40" },
-    ],
+    order: 1,
+    checked: false,
   },
   {
+    _id: 2,
     title: "Team Standup Meeting",
     time: "Tomorrow 9:00 AM - 10:00 AM",
-    participants: [
-      { name: "Person 3", src: "https://via.placeholder.com/40" },
-      { name: "Person 4", src: "https://via.placeholder.com/40" },
-    ],
+    order: 2,
+    checked: false,
   },
   {
+    _id: 3,
     title: "Project Brainstorming Session",
     time: "Wednesday 2:00 PM - 3:30 PM",
-    participants: [
-      { name: "Person 5", src: "https://via.placeholder.com/40" },
-      { name: "Person 6", src: "https://via.placeholder.com/40" },
-    ],
+    order: 3,
+    checked: false,
   },
 ];
 
 export default function TasksPage() {
+  const [tasks, setTasks] = useState(initialData);
+
+  const handleTaskCheck = (event, taskId) => {
+    const isChecked = event.target.checked;
+    const updatedTaskIndex = tasks.findIndex((t) => t._id === taskId);
+    const latestCheckedIndex = tasks.filter((t) => !t.checked);
+
+    const updatedTasks = _.cloneDeep(tasks);
+
+    updatedTasks[updatedTaskIndex].order = latestCheckedIndex.length;
+
+    updatedTasks[updatedTaskIndex].checked = isChecked;
+
+    const orderedTasks = updatedTasks
+      .map((task, index) => {
+        if (task._id !== taskId) {
+          return {
+            ...task,
+            order:
+              index === updatedTasks[updatedTaskIndex].order
+                ? updatedTasks[updatedTaskIndex].order + 1
+                : index,
+            checked: task._id === taskId ? isChecked : task.checked,
+          };
+        }
+
+        return task;
+      })
+      .sort((a, b) => a.order - b.order);
+
+    setTasks(orderedTasks);
+  };
+
   return (
     <Box
       sx={{
@@ -38,15 +70,19 @@ export default function TasksPage() {
         p: 2,
       }}
     >
-      {mockData.map((data, index) => (
-        <CustomCard
-          key={index}
-          title={data.title}
-          time={data.time}
-          participants={data.participants}
-          index={index}
-        />
-      ))}
+      {tasks
+        .sort((a, b) => a.order - b.order)
+        .map((task) => (
+          <CustomCard
+            key={task._id}
+            _id={task._id}
+            title={task.title}
+            time={task.time}
+            isChecked={task.checked}
+            onCheck={handleTaskCheck}
+            index={task.order}
+          />
+        ))}
     </Box>
   );
 }

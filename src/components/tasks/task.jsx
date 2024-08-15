@@ -4,9 +4,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CircleIcon from "@mui/icons-material/Circle";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-const TaskComponent = ({ title, time, index }) => {
+const CustomCard = ({ _id, title, time, isChecked, onCheck, index }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -15,8 +14,8 @@ const TaskComponent = ({ title, time, index }) => {
     return () => clearTimeout(timer);
   }, [index]);
 
-  const handleCheckboxChange = () => {
-    setIsChecked((prev) => !prev);
+  const handleTaskCheck = (event) => {
+    onCheck(event, _id);
   };
 
   return (
@@ -69,7 +68,7 @@ const TaskComponent = ({ title, time, index }) => {
             },
           }}
           checked={isChecked}
-          onChange={handleCheckboxChange}
+          onChange={handleTaskCheck}
         />
 
         <Typography
@@ -140,4 +139,4 @@ const TaskComponent = ({ title, time, index }) => {
   );
 };
 
-export default TaskComponent;
+export default CustomCard;
