@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CustomCard from "../components/tasks/task";
+import Task from "../components/tasks/task";
 import { Box } from "@mui/material";
 import _ from "lodash";
 
@@ -73,7 +73,7 @@ export default function TasksPage() {
       {tasks
         .sort((a, b) => a.order - b.order)
         .map((task) => (
-          <CustomCard
+          <Task
             key={task._id}
             _id={task._id}
             title={task.title}

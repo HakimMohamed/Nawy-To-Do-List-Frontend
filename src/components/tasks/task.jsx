@@ -4,7 +4,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CircleIcon from "@mui/icons-material/Circle";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-const CustomCard = ({ _id, title, time, isChecked, onCheck, index }) => {
+const TaskComponent = ({ _id, title, time, isChecked, onCheck, index }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -139,4 +139,4 @@ const CustomCard = ({ _id, title, time, isChecked, onCheck, index }) => {
   );
 };
 
-export default CustomCard;
+export default TaskComponent;
