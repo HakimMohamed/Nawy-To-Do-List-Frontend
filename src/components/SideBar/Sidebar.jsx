@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { MoreVertical } from "lucide-react";
+import { LifeBuoy, MoreVertical } from "lucide-react";
 import {
   Menu,
   MenuItem,
@@ -14,6 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Settings, Logout } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const SidebarContext = createContext();
 
@@ -22,6 +23,7 @@ export default function Sidebar({ children }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
+  const navigate = useNavigate();
   // Collapse sidebar on smaller screens
   useEffect(() => {
     const handleResize = () => {
@@ -120,6 +122,12 @@ export default function Sidebar({ children }) {
           </ListItemIcon>
           <Typography variant="inherit">Settings</Typography>
         </MenuItem>
+        <MenuItem onClick={() => navigate("help")}>
+          <ListItemIcon>
+            <LifeBuoy fontSize="small" />
+          </ListItemIcon>
+          <Typography variant="inherit">Help</Typography>
+        </MenuItem>
         <MenuItem
           onClick={handleLogOutClick}
           sx={{
@@ -136,7 +144,6 @@ export default function Sidebar({ children }) {
         </MenuItem>
       </Menu>
 
-      {/* Log Out Confirmation Dialog */}
       <Dialog
         open={dialogOpen}
         onClose={handleDialogClose}
