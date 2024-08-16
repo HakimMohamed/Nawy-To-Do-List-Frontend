@@ -1,10 +1,26 @@
 import { createContext, useState, useEffect } from "react";
 import { MoreVertical } from "lucide-react";
+import {
+  Menu,
+  MenuItem,
+  IconButton,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+  ListItemIcon,
+  Typography,
+} from "@mui/material";
+import { Settings, Logout } from "@mui/icons-material";
 
 const SidebarContext = createContext();
 
 export default function Sidebar({ children }) {
   const [expanded, setExpanded] = useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   // Collapse sidebar on smaller screens
   useEffect(() => {
@@ -16,17 +32,35 @@ export default function Sidebar({ children }) {
       }
     };
 
-    // Set initial state based on screen size
     handleResize();
 
-    // Add event listener for window resize
     window.addEventListener("resize", handleResize);
 
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogOutClick = () => {
+    setAnchorEl(null);
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleLogOutConfirm = () => {
+    setDialogOpen(false);
+  };
 
   return (
     <aside className="h-screen">
@@ -67,10 +101,65 @@ export default function Sidebar({ children }) {
                 constgenius@gmail.com
               </span>
             </div>
-            <MoreVertical size={20} />
+            <IconButton onClick={handleMenuOpen}>
+              <MoreVertical size={20} />
+            </IconButton>
           </div>
         </div>
       </nav>
+
+      {/* MUI Menu */}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+      >
+        <MenuItem onClick={handleMenuClose}>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          <Typography variant="inherit">Settings</Typography>
+        </MenuItem>
+        <MenuItem
+          onClick={handleLogOutClick}
+          sx={{
+            color: "red",
+            "&:hover": {
+              backgroundColor: "#ffe6e6",
+            },
+          }}
+        >
+          <ListItemIcon>
+            <Logout fontSize="small" sx={{ color: "red" }} />
+          </ListItemIcon>
+          <Typography variant="inherit">Log Out</Typography>
+        </MenuItem>
+      </Menu>
+
+      {/* Log Out Confirmation Dialog */}
+      <Dialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Are you sure you want to log out?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            This will log you out of your account.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleLogOutConfirm} color="primary" autoFocus>
+            Log Out
+          </Button>
+        </DialogActions>
+      </Dialog>
     </aside>
   );
 }

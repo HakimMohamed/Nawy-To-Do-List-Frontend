@@ -9,15 +9,10 @@ import HelpPage from "./pages/HelpPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Sidebar from "./components/SideBar/Sidebar";
 import SidebarItem from "./components/SideBar/SidebarItem";
-import { Layers, LifeBuoy, Settings, LogOut } from "lucide-react";
+import { Layers, LifeBuoy, Settings } from "lucide-react";
 import "./App.css";
 
 export default function App() {
-  const handleLogout = () => {
-    // Add your logout logic here
-    console.log("User logged out");
-  };
-
   return (
     <Router>
       <div className="flex">
@@ -55,11 +50,6 @@ export default function App() {
             to="/settings"
           />
           <SidebarItem icon={<LifeBuoy size={20} />} text="Help" to="/help" />
-          <SidebarItem
-            icon={<LogOut size={20} />}
-            text="Logout"
-            onClick={handleLogout}
-          />
         </Sidebar>
 
         <div className="flex-grow p-14">
