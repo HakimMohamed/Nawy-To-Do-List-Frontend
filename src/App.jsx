@@ -9,7 +9,7 @@ import HelpPage from "./pages/HelpPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Sidebar from "./components/SideBar/Sidebar";
 import SidebarItem from "./components/SideBar/SidebarItem";
-import { Layers, LifeBuoy, Settings } from "lucide-react";
+import { Layers } from "lucide-react";
 import "./App.css";
 
 export default function App() {
@@ -44,12 +44,6 @@ export default function App() {
           />
           <SidebarItem icon={<Layers size={20} />} text="Tasks" to="/tasks" />
           <hr className="my-3" />
-          <SidebarItem
-            icon={<Settings size={20} />}
-            text="Settings"
-            to="/settings"
-          />
-          <SidebarItem icon={<LifeBuoy size={20} />} text="Help" to="/help" />
         </Sidebar>
 
         <div className="flex-grow p-14">

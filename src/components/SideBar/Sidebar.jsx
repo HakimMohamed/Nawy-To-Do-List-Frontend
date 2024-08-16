@@ -162,7 +162,12 @@ export default function Sidebar({ children }) {
           <Button onClick={handleDialogClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleLogOutConfirm} color="primary" autoFocus>
+          <Button
+            onClick={handleLogOutConfirm}
+            variant="contained"
+            color="error"
+            autoFocus
+          >
             Log Out
           </Button>
         </DialogActions>

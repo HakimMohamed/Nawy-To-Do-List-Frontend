@@ -235,7 +235,11 @@ const TaskComponent = ({
           <Button onClick={handleCancelDelete} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleConfirmDelete} color="error">
+          <Button
+            onClick={handleConfirmDelete}
+            variant="contained"
+            color="error"
+          >
             Delete
           </Button>
         </DialogActions>
