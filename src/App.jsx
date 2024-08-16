@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import TodayPage from "./pages/TodayPage";
-import DashboardPage from "./pages/DashboardPage";
+import CompletedPage from "./pages/CompletedPage";
 import AllPage from "./pages/All";
 import TasksPage from "./pages/TasksPage";
 import ReportingPage from "./pages/ReportingPage";
@@ -55,7 +55,7 @@ export default function App() {
         <div className="flex-grow p-14">
           <Routes>
             <Route path="/" element={<TodayPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/completed" element={<CompletedPage />} />
             <Route path="/all" element={<AllPage />} />
             <Route path="/tasks" element={<TasksPage />} />
             <Route path="/reporting" element={<ReportingPage />} />
