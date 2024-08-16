@@ -56,25 +56,9 @@ export default function App() {
           />
           <SidebarItem icon={<LifeBuoy size={20} />} text="Help" to="/help" />
           <SidebarItem
-            icon={<LogOut size={20} style={{ color: "#e63946" }} />} // Default vibrant red color for the icon
+            icon={<LogOut size={20} />}
             text="Logout"
             onClick={handleLogout}
-            style={{
-              color: "#e63946",
-              fontWeight: "bold",
-              display: "flex",
-              alignItems: "center",
-              cursor: "pointer",
-              transition: "color 0.3s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = "#f08c82";
-              e.currentTarget.children[0].style.color = "#f08c82";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = "#e63946";
-              e.currentTarget.children[0].style.color = "#e63946";
-            }}
           />
         </Sidebar>
 
