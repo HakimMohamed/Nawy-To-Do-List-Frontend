@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import Task from "./task";
 
-export function TasksList({ tasks, onCheck }) {
+export function TasksList({ tasks, onCheck, handleTaskDelete }) {
   return (
     <Box
       sx={{
@@ -13,7 +13,7 @@ export function TasksList({ tasks, onCheck }) {
     >
       {tasks
         .sort((a, b) => a.order - b.order)
-        .map((task) => (
+        .map((task, index) => (
           <Task
             key={task._id}
             _id={task._id}
@@ -21,7 +21,8 @@ export function TasksList({ tasks, onCheck }) {
             time={task.time}
             isChecked={task.checked}
             onCheck={onCheck}
-            index={task.order}
+            index={index}
+            handleTaskDelete={handleTaskDelete}
           />
         ))}
     </Box>

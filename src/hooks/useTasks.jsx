@@ -51,11 +51,11 @@ export function useTasks({ status = "all", category = "all" } = {}) {
     // Order tasks based on their `order` field
     filteredTasks = filteredTasks.sort((a, b) => a.order - b.order);
 
+    // send request to backend to check the task
     setTasks(filteredTasks);
   }, [status, category]);
 
-  const handleTaskCheck = (event, taskId) => {
-    const isChecked = event.target.checked;
+  const handleTaskCheck = (isChecked, taskId) => {
     const updatedTaskIndex = tasks.findIndex((t) => t._id === taskId);
     const latestCheckedIndex = tasks.filter((t) => !t.checked);
 
@@ -83,9 +83,21 @@ export function useTasks({ status = "all", category = "all" } = {}) {
 
     setTasks(orderedTasks);
   };
-  console.log("hi");
+
+  const handleTaskDelete = (taskIndex, taskId) => {
+    const updatedTasks = _.cloneDeep(tasks);
+
+    delete updatedTasks[taskIndex];
+
+    setTasks(updatedTasks);
+
+    console.log(taskId);
+    // send request to backend to remove the task
+  };
+
   return {
     tasks,
     handleTaskCheck,
+    handleTaskDelete,
   };
 }

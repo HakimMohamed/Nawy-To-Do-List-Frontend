@@ -9,10 +9,15 @@ import HelpPage from "./pages/HelpPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Sidebar from "./components/SideBar/Sidebar";
 import SidebarItem from "./components/SideBar/SidebarItem";
-import { Layers, LifeBuoy, Settings } from "lucide-react";
+import { Layers, LifeBuoy, Settings, LogOut } from "lucide-react";
 import "./App.css";
 
 export default function App() {
+  const handleLogout = () => {
+    // Add your logout logic here
+    console.log("User logged out");
+  };
+
   return (
     <Router>
       <div className="flex">
@@ -28,7 +33,7 @@ export default function App() {
               <img
                 src="./icons/completed.svg"
                 className="w-7 h-7"
-                alt="Today"
+                alt="Completed"
               />
             }
             text="Completed"
@@ -36,7 +41,7 @@ export default function App() {
           />
           <SidebarItem
             icon={
-              <img src="./icons/infinity.svg" className="w-6 h-6" alt="Home" />
+              <img src="./icons/infinity.svg" className="w-6 h-6" alt="All" />
             }
             text="All"
             to="/all"
@@ -50,6 +55,27 @@ export default function App() {
             to="/settings"
           />
           <SidebarItem icon={<LifeBuoy size={20} />} text="Help" to="/help" />
+          <SidebarItem
+            icon={<LogOut size={20} style={{ color: "#e63946" }} />} // Default vibrant red color for the icon
+            text="Logout"
+            onClick={handleLogout}
+            style={{
+              color: "#e63946",
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+              cursor: "pointer",
+              transition: "color 0.3s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "#f08c82";
+              e.currentTarget.children[0].style.color = "#f08c82";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "#e63946";
+              e.currentTarget.children[0].style.color = "#e63946";
+            }}
+          />
         </Sidebar>
 
         <div className="flex-grow p-14">
