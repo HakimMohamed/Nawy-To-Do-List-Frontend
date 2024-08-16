@@ -23,7 +23,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const TaskComponent = ({
   _id,
   title,
-  time,
+  createdAt,
   isChecked,
   onCheck,
   handleTaskDelete,
@@ -31,7 +31,7 @@ const TaskComponent = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [openDialog, setOpenDialog] = useState(false); // State for dialog visibility
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -171,7 +171,11 @@ const TaskComponent = ({
                 },
               }}
             >
-              {time}
+              {new Date(createdAt).toLocaleDateString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+              })}
             </Typography>
           </Box>
           <IconButton

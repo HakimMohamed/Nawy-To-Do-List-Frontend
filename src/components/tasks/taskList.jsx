@@ -18,7 +18,7 @@ export function TasksList({ tasks, onCheck, handleTaskDelete }) {
             key={task._id}
             _id={task._id}
             title={task.title}
-            time={task.time}
+            createdAt={task.createdAt}
             isChecked={task.checked}
             onCheck={onCheck}
             index={index}

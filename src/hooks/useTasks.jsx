@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { useEffect, useState } from "react";
 import _ from "lodash";
 
@@ -5,7 +6,7 @@ const initialData = [
   {
     _id: 1,
     title: "Client Review & Feedback",
-    time: "Today 10:00 PM - 11:45 PM",
+    createdAt: new Date(),
     order: 1,
     checked: false,
     category: "2020 goals",
@@ -13,7 +14,7 @@ const initialData = [
   {
     _id: 2,
     title: "Team Standup Meeting",
-    time: "Tomorrow 9:00 AM - 10:00 AM",
+    createdAt: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
     order: 2,
     checked: false,
     category: "work",
@@ -21,39 +22,48 @@ const initialData = [
   {
     _id: 3,
     title: "Project Brainstorming Session",
-    time: "Wednesday 2:00 PM - 3:30 PM",
+    createdAt: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
     order: 3,
     checked: true,
     category: "2020 goals",
   },
 ];
 
-export function useTasks({ status = "all", category = "all" } = {}) {
+export function useTasks({ category }) {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     let filteredTasks = _.cloneDeep(initialData);
 
-    // Filter by status
-    if (status !== "all") {
-      filteredTasks = filteredTasks.filter(
-        (task) => status === "completed" && task.checked
-      );
+    switch (category) {
+      case "completed":
+        filteredTasks = filteredTasks.filter((task) => task.checked);
+        break;
+      case "today":
+        const today = new Date();
+        filteredTasks = filteredTasks.filter((task) => {
+          const taskDate = new Date(task.createdAt);
+          return (
+            taskDate.getDate() === today.getDate() &&
+            taskDate.getMonth() === today.getMonth() &&
+            taskDate.getFullYear() === today.getFullYear()
+          );
+        });
+        break;
+
+      case "alphabetical":
+        filteredTasks = filteredTasks.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+        break;
+      default:
+        break;
     }
 
-    // Filter by category
-    if (category !== "all") {
-      filteredTasks = filteredTasks.filter(
-        (task) => task.category === category
-      );
-    }
-
-    // Order tasks based on their `order` field
     filteredTasks = filteredTasks.sort((a, b) => a.order - b.order);
 
-    // send request to backend to check the task
     setTasks(filteredTasks);
-  }, [status, category]);
+  }, [category]);
 
   const handleTaskCheck = (isChecked, taskId) => {
     const updatedTaskIndex = tasks.findIndex((t) => t._id === taskId);
