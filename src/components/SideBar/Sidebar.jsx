@@ -240,8 +240,19 @@ export default function Sidebar({ children, addPage, pages }) {
   };
 
   return (
-    <aside className="h-screen">
-      <nav className="h-full flex flex-col bg-white border-r shadow-sm">
+    <aside
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        height: "100vh",
+        overflowY: "auto",
+        backgroundColor: "white",
+        zIndex: 1000,
+        borderRight: "1px solid #e0e0e0",
+      }}
+    >
+      <nav className="h-full flex flex-col bg-white shadow-sm">
         <div className="p-4 pb-2 flex justify-between items-center">
           <button
             onClick={() => setExpanded((curr) => !curr)}
