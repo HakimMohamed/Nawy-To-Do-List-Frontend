@@ -14,6 +14,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  Divider,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CircleIcon from "@mui/icons-material/Circle";
@@ -85,6 +86,10 @@ const TaskComponent = ({
     setOpenDialog(false);
   };
 
+  const handleDoubleClick = () => {
+    onCheck(!isChecked, _id);
+  };
+
   return (
     <>
       <Card
@@ -113,6 +118,7 @@ const TaskComponent = ({
           },
         }}
         onContextMenu={handleMenuOpen} // Add right-click menu opening
+        onDoubleClick={handleDoubleClick} // Handle double-click for toggle completion
       >
         <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
           <Checkbox
@@ -236,6 +242,7 @@ const TaskComponent = ({
               }
             />
           </MenuItem>
+          <Divider sx={{ my: 1 }} />
           <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
             <ListItemIcon>
               <DeleteIcon sx={{ color: "error.main" }} />
