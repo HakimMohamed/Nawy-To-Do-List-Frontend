@@ -31,6 +31,7 @@ const TaskComponent = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [menuPosition, setMenuPosition] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
@@ -46,11 +47,28 @@ const TaskComponent = ({
   };
 
   const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    event.preventDefault();
+
+    // Close the menu if it's already open, then reopen it
+    if (anchorEl) {
+      setAnchorEl(null);
+      setMenuPosition(null);
+
+      // Delay opening the menu slightly to ensure it closes first
+      setTimeout(() => {
+        setMenuPosition({ mouseX: event.clientX, mouseY: event.clientY });
+        setAnchorEl(event.currentTarget);
+      }, 0);
+    } else {
+      // Open the menu if it's not already open
+      setMenuPosition({ mouseX: event.clientX, mouseY: event.clientY });
+      setAnchorEl(event.currentTarget);
+    }
   };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+    setMenuPosition(null); // Reset menu position
   };
 
   const handleDelete = () => {
@@ -94,6 +112,7 @@ const TaskComponent = ({
             transform: "scale(1.02)",
           },
         }}
+        onContextMenu={handleMenuOpen} // Add right-click menu opening
       >
         <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
           <Checkbox
@@ -190,23 +209,20 @@ const TaskComponent = ({
           </IconButton>
         </Box>
         <Menu
-          anchorEl={anchorEl}
+          anchorReference="anchorPosition"
+          anchorPosition={
+            menuPosition !== null
+              ? { top: menuPosition.mouseY, left: menuPosition.mouseX }
+              : undefined
+          }
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
           sx={{
             "& .MuiMenu-paper": {
               borderRadius: "8px",
               boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
               minWidth: "160px",
-              mt: 7,
+              mt: 1,
             },
           }}
         >

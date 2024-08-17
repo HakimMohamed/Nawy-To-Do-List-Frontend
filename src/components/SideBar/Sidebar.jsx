@@ -255,7 +255,10 @@ export default function Sidebar({ children, addPage, pages }) {
       <nav className="h-full flex flex-col bg-white shadow-sm">
         <div className="p-4 pb-2 flex justify-between items-center">
           <button
-            onClick={() => setExpanded((curr) => !curr)}
+            onClick={() => {
+              setExpanded((curr) => !curr);
+              setFormVisible(false);
+            }}
             className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
           >
             <img
