@@ -46,10 +46,11 @@ export default function App() {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const addSidebarItem = () => {
-    if (!newItemName.trim()) return; // Do nothing if name is empty
+    if (!newItemName.trim()) return;
+    console.log(newItemName.split(" ").join(""));
     const newItem = {
-      path: `/new-${Date.now()}`,
-      category: "new",
+      path: `/${newItemName.split(" ").join("")}`,
+      category: newItemName,
       sidebarItem: {
         icon: selectedIcon,
         text: newItemName,

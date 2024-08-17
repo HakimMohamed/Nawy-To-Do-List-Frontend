@@ -20,12 +20,68 @@ const initialData = [
     category: "work",
   },
   {
+    _id: 4,
+    title: "Design Review Meeting",
+    createdAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+    order: 3,
+    checked: false,
+    category: "design",
+  },
+  {
+    _id: 6,
+    title: "Quarterly Financial Review",
+    createdAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    order: 4,
+    checked: false,
+    category: "finance",
+  },
+  {
+    _id: 7,
+    title: "Client Onboarding Session",
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+    order: 5,
+    checked: false,
+    category: "client",
+  },
+  {
+    _id: 9,
+    title: "Marketing Campaign Strategy",
+    createdAt: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000),
+    order: 6,
+    checked: false,
+    category: "marketing",
+  },
+  {
+    _id: 8,
+    title: "New Feature Development",
+    createdAt: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000),
+    order: 9,
+    checked: true,
+    category: "development",
+  },
+  {
     _id: 3,
     title: "Project Brainstorming Session",
     createdAt: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
-    order: 3,
+    order: 7,
     checked: true,
     category: "2020 goals",
+  },
+  {
+    _id: 5,
+    title: "Product Launch Planning",
+    createdAt: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+    order: 8,
+    checked: true,
+    category: "marketing",
+  },
+  {
+    _id: 10,
+    title: "Website Redesign Discussion",
+    createdAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    order: 10,
+    checked: true,
+    category: "design",
   },
 ];
 
@@ -51,12 +107,13 @@ export function useTasks({ category }) {
         });
         break;
 
-      case "alphabetical":
-        filteredTasks = filteredTasks.sort((a, b) =>
-          a.name.localeCompare(b.name)
-        );
+      case "all":
         break;
+
       default:
+        filteredTasks = filteredTasks.filter(
+          (task) => task.category === category
+        );
         break;
     }
 
