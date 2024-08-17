@@ -291,10 +291,8 @@ export default function Sidebar({ children, addPage, pages }) {
             }`}
           >
             <div className="leading-4">
-              <h4 className="font-semibold">constGenius</h4>
-              <span className="text-xs text-gray-600">
-                constgenius@gmail.com
-              </span>
+              <h4 className="font-semibold">test</h4>
+              <span className="text-xs text-gray-600">test@gmail.com</span>
             </div>
             <IconButton onClick={handleMenuOpen}>
               <MoreVertical size={20} />
