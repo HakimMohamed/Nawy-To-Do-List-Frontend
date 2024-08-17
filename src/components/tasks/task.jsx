@@ -80,15 +80,14 @@ const TaskComponent = ({
           boxShadow: "none",
           border: "1px solid #e0e0e0",
           margin: "0 auto",
-          height: "72px",
           opacity: isVisible ? 1 : 0,
           transform: isVisible ? "translateY(0)" : "translateY(20px)",
           transition: "opacity 0.5s ease, transform 0.5s ease",
           backgroundColor: isChecked ? "#f0f0f0" : "none",
           mb: 2,
+          overflow: "hidden",
           "@media (max-width: 600px)": {
             p: 1,
-            height: "72px",
           },
           "&:hover": {
             backgroundColor: "#f0f0f0",
