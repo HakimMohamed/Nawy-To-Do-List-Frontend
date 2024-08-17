@@ -154,7 +154,7 @@ export default function Sidebar({ children, addPage, pages }) {
         onMouseOver={(e) => Object.assign(e.target.style, addNewItemHoverStyle)}
         onMouseOut={(e) => Object.assign(e.target.style, addNewItemStyle)}
       >
-        Add New Item
+        + New Collection
       </div>
     ) : (
       <div>
