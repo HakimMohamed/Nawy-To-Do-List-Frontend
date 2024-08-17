@@ -12,7 +12,7 @@ export default function App() {
   return (
     <Router>
       <div className="flex">
-        <Sidebar addPage={addPage}>
+        <Sidebar addPage={addPage} pages={pages}>
           {pages.map((page, index) => (
             <div key={index}>
               <SidebarItem

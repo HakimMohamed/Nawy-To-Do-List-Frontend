@@ -21,7 +21,7 @@ const SidebarContext = createContext();
 
 import iconOptions from "../../icons";
 
-export default function Sidebar({ children, addPage }) {
+export default function Sidebar({ children, addPage, pages }) {
   const childrenArray = React.Children.toArray(children);
 
   const firstPart = childrenArray.slice(0, childrenArray.length);
@@ -34,10 +34,19 @@ export default function Sidebar({ children, addPage }) {
   const [selectedIcon, setSelectedIcon] = useState(iconOptions[0].icon);
   const [formVisible, setFormVisible] = useState(false);
   const [anchorElForm, setFormAnchor] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const addSidebarItem = () => {
     if (!newItemName.trim()) return;
-    console.log(newItemName.split(" ").join(""));
+
+    const isDuplicated = pages.find(
+      (p) => p.sidebarItem.text.toLowerCase() === newItemName.toLowerCase()
+    );
+    if (isDuplicated) {
+      setErrorMessage("Error: Category already exists.");
+      return;
+    }
+
     const newItem = {
       path: `/${newItemName.split(" ").join("")}`,
       category: newItemName,
@@ -46,9 +55,11 @@ export default function Sidebar({ children, addPage }) {
         text: newItemName,
       },
     };
+
     addPage(newItem);
     setNewItemName("");
     setFormVisible(false);
+    setErrorMessage(""); // Clear error message on successful addition
   };
 
   const handleIconClick = (event) => {
@@ -146,79 +157,84 @@ export default function Sidebar({ children, addPage }) {
         Add New Item
       </div>
     ) : (
-      <div className="p-4 flex items-center">
-        <TextField
-          placeholder="Enter item name"
-          value={newItemName}
-          onChange={(e) => setNewItemName(e.target.value)}
-          className="border p-2 rounded w-full mr-2"
-        />
-        <IconButton onClick={handleIconClick} color="primary">
-          {selectedIcon}
-        </IconButton>
-        <button
-          onClick={addSidebarItem}
-          style={addButtonStyle}
-          onMouseOver={(e) =>
-            Object.assign(e.target.style, addButtonHoverStyle)
-          }
-          onMouseOut={(e) => Object.assign(e.target.style, addButtonStyle)}
-        >
-          Add
-        </button>
-        <Popover
-          id={id}
-          open={open}
-          anchorEl={anchorElForm}
-          onClose={() => setFormAnchor(null)}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-          PaperProps={{
-            style: {
-              width: "auto",
-              maxWidth: "none",
-              padding: "10px",
-            },
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "8px",
-              maxWidth: "300px",
-              maxHeight: "400px",
-              overflowY: "auto",
+      <div>
+        <div className="p-4 flex items-center">
+          <TextField
+            placeholder="Enter item name"
+            value={newItemName}
+            onChange={(e) => setNewItemName(e.target.value)}
+            className="border p-2 rounded w-full mr-2"
+          />
+          <IconButton onClick={handleIconClick} color="primary">
+            {selectedIcon}
+          </IconButton>
+          <button
+            onClick={addSidebarItem}
+            style={addButtonStyle}
+            onMouseOver={(e) =>
+              Object.assign(e.target.style, addButtonHoverStyle)
+            }
+            onMouseOut={(e) => Object.assign(e.target.style, addButtonStyle)}
+          >
+            Add
+          </button>
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorElForm}
+            onClose={() => setFormAnchor(null)}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            PaperProps={{
+              style: {
+                width: "auto",
+                maxWidth: "none",
+                padding: "10px",
+              },
             }}
           >
-            {iconOptions.map((option, index) => (
-              <IconButton
-                key={index}
-                onClick={() => handleMenuItemClick(option.icon)}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "36px",
-                  height: "36px",
-                  borderRadius: "50%",
-                  border: "1px solid rgba(0, 0, 0, 0.12)",
-                  "&:hover": {
-                    backgroundColor: "rgba(0, 0, 0, 0.04)",
-                  },
-                }}
-              >
-                {option.icon}
-              </IconButton>
-            ))}
-          </Box>
-        </Popover>
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "8px",
+                maxWidth: "300px",
+                maxHeight: "400px",
+                overflowY: "auto",
+              }}
+            >
+              {iconOptions.map((option, index) => (
+                <IconButton
+                  key={index}
+                  onClick={() => handleMenuItemClick(option.icon)}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "50%",
+                    border: "1px solid rgba(0, 0, 0, 0.12)",
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.04)",
+                    },
+                  }}
+                >
+                  {option.icon}
+                </IconButton>
+              ))}
+            </Box>
+          </Popover>
+        </div>
+        {errorMessage && (
+          <div className="text-red-500 text-sm mt-2">{errorMessage}</div>
+        )}
       </div>
     );
   };
