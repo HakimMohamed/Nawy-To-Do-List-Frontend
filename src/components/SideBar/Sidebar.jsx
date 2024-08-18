@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useRef } from "react";
 import { LifeBuoy, MoreVertical } from "lucide-react";
 import {
   Menu,
@@ -12,29 +12,31 @@ import {
   Button,
   ListItemIcon,
   Typography,
+  Popover,
+  Box,
+  TextField,
 } from "@mui/material";
 import { Settings, Logout } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { TextField, Popover, Box } from "@mui/material";
+import iconOptions from "../../icons";
 
 const SidebarContext = createContext();
 
-import iconOptions from "../../icons";
-
 export default function Sidebar({ children, addPage, pages }) {
+  const sidebarRef = useRef(null); // Create a ref for the sidebar
   const childrenArray = React.Children.toArray(children);
-
   const firstPart = childrenArray.slice(0, childrenArray.length);
   const remainingPart = childrenArray.slice(childrenArray.length);
   const [expanded, setExpanded] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-
   const [newItemName, setNewItemName] = useState("");
   const [selectedIcon, setSelectedIcon] = useState(iconOptions[0].icon);
   const [formVisible, setFormVisible] = useState(false);
   const [anchorElForm, setFormAnchor] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const addSidebarItem = () => {
     if (!newItemName.trim()) return;
@@ -58,7 +60,7 @@ export default function Sidebar({ children, addPage, pages }) {
 
     addPage(newItem);
     setNewItemName("");
-    setFormVisible(false);
+    // setFormVisible(false);
     setErrorMessage(""); // Clear error message on successful addition
   };
 
@@ -74,7 +76,6 @@ export default function Sidebar({ children, addPage, pages }) {
   const open = Boolean(anchorElForm);
   const id = open ? "simple-popover" : undefined;
 
-  // Inline styles
   const addNewItemStyle = {
     color: "#1d4ed8", // Blue text color
     cursor: "pointer",
@@ -105,7 +106,6 @@ export default function Sidebar({ children, addPage, pages }) {
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
   };
 
-  const navigate = useNavigate();
   // Collapse sidebar on smaller screens
   useEffect(() => {
     const handleResize = () => {
@@ -241,6 +241,9 @@ export default function Sidebar({ children, addPage, pages }) {
 
   return (
     <aside
+      ref={sidebarRef} // Attach the ref to the sidebar
+      onMouseEnter={() => setExpanded(true)}
+      onMouseLeave={() => setExpanded(!formVisible && false)}
       style={{
         position: "fixed",
         top: 0,
@@ -250,14 +253,15 @@ export default function Sidebar({ children, addPage, pages }) {
         backgroundColor: "white",
         zIndex: 1000,
         borderRight: "1px solid #e0e0e0",
+        transition: "width 0.3s", // Smooth transition for expanding/collapsing
+        width: expanded ? "250px" : "80px", // Adjust width as needed
       }}
     >
       <nav className="h-full flex flex-col bg-white shadow-sm">
         <div className="p-4 pb-2 flex justify-between items-center">
           <button
             onClick={() => {
-              setExpanded((curr) => !curr);
-              setFormVisible(false);
+              navigate("/");
             }}
             className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
           >
