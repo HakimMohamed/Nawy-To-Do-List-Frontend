@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useRef } from "react";
+import React, { createContext, useState, useRef, useEffect } from "react";
 import { LifeBuoy, MoreVertical } from "lucide-react";
 import {
   Menu,
@@ -109,7 +109,7 @@ export default function Sidebar({ children, addPage, pages }) {
   // Collapse sidebar on smaller screens
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 768) {
+      if (window.innerWidth <= 2000) {
         setExpanded(false);
       } else {
         setExpanded(true);
@@ -158,26 +158,34 @@ export default function Sidebar({ children, addPage, pages }) {
       </div>
     ) : (
       <div>
-        <div className="p-4 flex items-center">
+        <div className="p-2 flex flex-col items-start" style={{ gap: "4px" }}>
           <TextField
-            placeholder="Enter item name"
+            placeholder="Enter Collection Name"
             value={newItemName}
             onChange={(e) => setNewItemName(e.target.value)}
-            className="border p-2 rounded w-full mr-2"
+            className="border p-2 rounded w-full"
+            style={{ marginBottom: "24px", maxWidth: "200px" }}
           />
-          <IconButton onClick={handleIconClick} color="primary">
-            {selectedIcon}
-          </IconButton>
-          <button
-            onClick={addSidebarItem}
-            style={addButtonStyle}
-            onMouseOver={(e) =>
-              Object.assign(e.target.style, addButtonHoverStyle)
-            }
-            onMouseOut={(e) => Object.assign(e.target.style, addButtonStyle)}
+          <div
+            className="flex items-center w-full"
+            style={{ marginBottom: "24px" }}
           >
-            Add
-          </button>
+            {" "}
+            <IconButton onClick={handleIconClick} color="primary">
+              {selectedIcon}
+            </IconButton>
+            <button
+              onClick={addSidebarItem}
+              style={addButtonStyle}
+              onMouseOver={(e) =>
+                Object.assign(e.target.style, addButtonHoverStyle)
+              }
+              onMouseOut={(e) => Object.assign(e.target.style, addButtonStyle)}
+              className="ml-3"
+            >
+              Add
+            </button>
+          </div>
           <Popover
             id={id}
             open={open}
@@ -232,6 +240,7 @@ export default function Sidebar({ children, addPage, pages }) {
             </Box>
           </Popover>
         </div>
+
         {errorMessage && (
           <div className="text-red-500 text-sm mt-2">{errorMessage}</div>
         )}
@@ -242,8 +251,6 @@ export default function Sidebar({ children, addPage, pages }) {
   return (
     <aside
       ref={sidebarRef} // Attach the ref to the sidebar
-      onMouseEnter={() => setExpanded(true)}
-      onMouseLeave={() => setExpanded(!formVisible && false)}
       style={{
         position: "fixed",
         top: 0,
@@ -252,16 +259,17 @@ export default function Sidebar({ children, addPage, pages }) {
         overflowY: "auto",
         backgroundColor: "white",
         zIndex: 1000,
+        overflow: "hidden",
         borderRight: "1px solid #e0e0e0",
         transition: "width 0.3s", // Smooth transition for expanding/collapsing
-        width: expanded ? "250px" : "80px", // Adjust width as needed
       }}
     >
       <nav className="h-full flex flex-col bg-white shadow-sm">
         <div className="p-4 pb-2 flex justify-between items-center">
           <button
             onClick={() => {
-              navigate("/");
+              setExpanded(!expanded);
+              setFormVisible(false);
             }}
             className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
           >
