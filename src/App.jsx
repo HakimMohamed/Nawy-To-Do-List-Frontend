@@ -37,7 +37,7 @@ export default function App() {
             ))}
           </Routes>
         </div>
-        <ChatBox /> {/* Render the ChatBox component */}
+        <ChatBox />
       </div>
     </Router>
   );

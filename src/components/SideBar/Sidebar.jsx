@@ -264,7 +264,7 @@ export default function Sidebar({ children, addPage, pages }) {
         zIndex: 1000,
         overflow: "hidden",
         borderRight: "1px solid #e0e0e0",
-        transition: "width 0.3s", // Smooth transition for expanding/collapsing
+        transition: "width 0.3s",
       }}
     >
       <nav className="h-full flex flex-col bg-white shadow-sm">
