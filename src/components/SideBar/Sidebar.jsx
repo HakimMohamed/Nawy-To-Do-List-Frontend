@@ -165,7 +165,9 @@ export default function Sidebar({ children, addPage, pages }) {
             onChange={(e) => setNewItemName(e.target.value)}
             className="border p-2 rounded w-full"
             style={{ marginBottom: "24px", maxWidth: "200px" }}
+            autoComplete="off"
           />
+
           <div
             className="flex items-center w-full"
             style={{ marginBottom: "24px" }}
@@ -251,6 +253,7 @@ export default function Sidebar({ children, addPage, pages }) {
   return (
     <aside
       ref={sidebarRef} // Attach the ref to the sidebar
+      onMouseLeave={() => setExpanded(false)}
       style={{
         position: "fixed",
         top: 0,
