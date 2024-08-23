@@ -2,9 +2,12 @@
 import { useEffect, useState } from "react";
 import _ from "lodash";
 import axios from "axios";
+import demoTasks from "../_mock/demoTasks";
 
 export function useTasks({ category }) {
-  const [tasks, setTasks] = useState([]);
+  const isAuthenticated = localStorage.getItem("token");
+
+  const [tasks, setTasks] = useState(isAuthenticated ? [] : demoTasks);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -23,6 +26,7 @@ export function useTasks({ category }) {
         setTasks(response.data.data);
       } catch (error) {
         console.log(error);
+        localStorage.clear();
       }
     };
 

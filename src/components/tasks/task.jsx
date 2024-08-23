@@ -98,7 +98,7 @@ const TaskComponent = ({
           alignItems: "center",
           p: 2,
           width: "100%",
-          maxWidth: "1500px",
+          maxWidth: "1000px",
           borderRadius: 8,
           border: "1px solid #e0e0e0",
           margin: "0 auto",
@@ -118,8 +118,8 @@ const TaskComponent = ({
             transform: "scale(1.02) translateX(25px)",
           },
         }}
-        onContextMenu={handleMenuOpen} // Add right-click menu opening
-        onDoubleClick={handleDoubleClick} // Handle double-click for toggle completion
+        onContextMenu={handleMenuOpen}
+        onDoubleClick={handleDoubleClick}
       >
         <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
           <Checkbox

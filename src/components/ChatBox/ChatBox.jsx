@@ -23,22 +23,19 @@ const SubmitInput = () => {
       sx={{
         position: "fixed",
         bottom: "10%",
-        left: "55%",
+        left: "50%",
         transform: "translateX(-50%)",
-        width: "70%",
+        width: "30%",
         height: "45px",
-        maxWidth: "1000px",
-        backgroundColor: "white",
+        maxWidth: "600x",
+        backgroundColor: "black",
         borderRadius: "50px",
         boxShadow: 4,
         p: 1,
         display: "flex",
         alignItems: "center",
-        opacity: isFocused || inputValue ? 1 : 0.5,
+        opacity: isFocused || inputValue ? 0.8 : 0.3,
         transition: "opacity 0.3s ease",
-        "&:hover": {
-          opacity: 1,
-        },
       }}
       onMouseEnter={() => setIsFocused(true)}
       onMouseLeave={() => {
@@ -62,10 +59,12 @@ const SubmitInput = () => {
             paddingRight: 8,
             fontWeight: "bold",
             fontSize: "1.125rem",
-            border: "none",
-            outline: "none",
+            color: "white",
             "& fieldset": {
               border: "none",
+            },
+            "& input": {
+              color: "white",
             },
           },
         }}
@@ -73,17 +72,16 @@ const SubmitInput = () => {
       <IconButton
         sx={{
           position: "absolute",
-          right: 7,
+          right: 10,
           width: 32,
           height: 32,
           borderRadius: "50%",
-          backgroundColor: "black",
-          color: "white",
-          overflow: "hidden",
+          backgroundColor: "white",
+          color: "black",
           boxShadow: 3,
           transition: "transform 0.3s ease, background-color 0.3s ease",
           "&:hover": {
-            backgroundColor: "black",
+            backgroundColor: "white",
             transform: "scale(1.1)",
           },
         }}

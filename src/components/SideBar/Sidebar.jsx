@@ -316,7 +316,6 @@ export default function Sidebar({ children, addPage, pages }) {
         </div>
       </nav>
 
-      {/* MUI Menu */}
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
