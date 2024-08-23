@@ -5,13 +5,12 @@ import axios from "axios";
 import demoTasks from "../_mock/demoTasks";
 
 export function useTasks({ category }) {
-  const isAuthenticated = localStorage.getItem("token");
-
-  const [tasks, setTasks] = useState(isAuthenticated ? [] : demoTasks);
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
+        setTasks([]);
         const response = await axios.get(
           `${
             import.meta.env.VITE_REACT_APP_BASE_URL
@@ -26,6 +25,26 @@ export function useTasks({ category }) {
         setTasks(response.data.data);
       } catch (error) {
         console.log(error);
+        const filteredDemoTasks = demoTasks.filter((task) => {
+          switch (category) {
+            case "completed":
+              return task.checked;
+
+            case "today":
+              const today = new Date();
+              const taskDate = new Date(task.createdAt);
+              return (
+                taskDate.getDate() === today.getDate() &&
+                taskDate.getMonth() === today.getMonth() &&
+                taskDate.getFullYear() === today.getFullYear()
+              );
+
+            default:
+              return task;
+          }
+        });
+
+        setTasks(filteredDemoTasks);
         localStorage.clear();
       }
     };
