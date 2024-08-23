@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Sidebar from "./components/SideBar/Sidebar";
 import SidebarItem from "./components/SideBar/SidebarItem";
+import ChatBox from "./components/ChatBox/ChatBox"; // Import the ChatBox component
 import "./App.css";
 import { TasksList } from "./components/tasks/taskList";
 import { useTasks } from "./hooks/useTasks";
@@ -25,7 +26,6 @@ export default function App() {
             </div>
           ))}
         </Sidebar>
-
         <div className="flex-grow p-14">
           <Routes>
             {pages.map((page, index) => (
@@ -37,6 +37,7 @@ export default function App() {
             ))}
           </Routes>
         </div>
+        <ChatBox /> {/* Render the ChatBox component */}
       </div>
     </Router>
   );

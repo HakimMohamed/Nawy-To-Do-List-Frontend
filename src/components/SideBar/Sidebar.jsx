@@ -60,7 +60,7 @@ export default function Sidebar({ children, addPage, pages }) {
 
     addPage(newItem);
     setNewItemName("");
-    // setFormVisible(false);
+    setFormVisible(false);
     setErrorMessage(""); // Clear error message on successful addition
   };
 
