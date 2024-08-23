@@ -1,132 +1,34 @@
 /* eslint-disable no-case-declarations */
 import { useEffect, useState } from "react";
 import _ from "lodash";
-const initialData = [
-  {
-    _id: 1,
-    title: "Client Review & Feedback",
-    createdAt: new Date(),
-    order: 1,
-    checked: false,
-    category: "2020 goals",
-  },
-  {
-    _id: 2,
-    title: "Team Standup Meeting",
-    createdAt: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
-    order: 2,
-    checked: false,
-    category: "work",
-  },
-  {
-    _id: 4,
-    title: "Design Review Meeting",
-    createdAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
-    order: 3,
-    checked: false,
-    category: "design",
-  },
-  {
-    _id: 6,
-    title: "Quarterly Financial Review",
-    createdAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-    order: 4,
-    checked: false,
-    category: "finance",
-  },
-  {
-    _id: 7,
-    title: "Client Onboarding Session",
-    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-    order: 5,
-    checked: false,
-    category: "client",
-  },
-  {
-    _id: 9,
-    title: "Marketing Campaign Strategy",
-    createdAt: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000),
-    order: 6,
-    checked: true,
-    category: "marketing",
-  },
-  {
-    _id: 10,
-    title: "Product Launch Meeting",
-    createdAt: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
-    order: 7,
-    checked: false,
-    category: "product",
-  },
-  {
-    _id: 11,
-    title: "Annual Budget Planning",
-    createdAt: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000),
-    order: 8,
-    checked: false,
-    category: "finance",
-  },
-  {
-    _id: 12,
-    title: "User Experience Workshop",
-    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-    order: 9,
-    checked: true,
-    category: "design",
-  },
-  {
-    _id: 13,
-    title: "Sales Strategy Meeting",
-    createdAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-    order: 10,
-    checked: false,
-    category: "sales",
-  },
-  {
-    _id: 14,
-    title: "Client Satisfaction Survey",
-    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-    order: 11,
-    checked: true,
-    category: "client",
-  },
-];
+import axios from "axios";
 
 export function useTasks({ category }) {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    let filteredTasks = _.cloneDeep(initialData);
-
-    switch (category) {
-      case "completed":
-        filteredTasks = filteredTasks.filter((task) => task.checked);
-        break;
-      case "today":
-        const today = new Date();
-        filteredTasks = filteredTasks.filter((task) => {
-          const taskDate = new Date(task.createdAt);
-          return (
-            taskDate.getDate() === today.getDate() &&
-            taskDate.getMonth() === today.getMonth() &&
-            taskDate.getFullYear() === today.getFullYear()
-          );
-        });
-        break;
-
-      case "all":
-        break;
-
-      default:
-        filteredTasks = filteredTasks.filter(
-          (task) => task.category === category
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_REACT_APP_BASE_URL
+          }api/tasks?category=${category}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
         );
-        break;
-    }
 
-    filteredTasks = filteredTasks.sort((a, b) => a.order - b.order);
+        setTasks(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-    setTasks(filteredTasks);
+    fetchTasks();
+
+    return () => {};
   }, [category]);
 
   const handleTaskCheck = (isChecked, taskId) => {
