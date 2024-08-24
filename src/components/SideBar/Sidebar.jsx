@@ -134,10 +134,8 @@ export default function Sidebar({ children, addPage, pages }) {
   };
 
   const handleLogOutClick = () => {
-    localStorage.clear();
     setAnchorEl(null);
     setDialogOpen(true);
-    window.location.reload();
   };
 
   const handleDialogClose = () => {
@@ -145,6 +143,8 @@ export default function Sidebar({ children, addPage, pages }) {
   };
 
   const handleLogOutConfirm = () => {
+    localStorage.clear();
+    window.location.reload();
     setDialogOpen(false);
   };
 
