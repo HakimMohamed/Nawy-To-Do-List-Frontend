@@ -302,7 +302,7 @@ export default function Sidebar({ children, addPage, pages }) {
 
         <div className="border-t flex p-3">
           <img
-            src="./nawah-icon.svg"
+            src="./vite.svg"
             className="w-10 h-10 rounded-md"
             alt="User Icon"
           />
