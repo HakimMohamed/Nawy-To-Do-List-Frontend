@@ -28,7 +28,7 @@ const SubmitInput = ({ addTask }) => {
     <Box
       sx={{
         position: "fixed",
-        bottom: "10%",
+        bottom: "2%",
         left: "50%",
         transform: "translateX(-50%)",
         height: "45px",

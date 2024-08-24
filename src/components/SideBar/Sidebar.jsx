@@ -109,7 +109,7 @@ export default function Sidebar({ children, addPage, pages }) {
   // Collapse sidebar on smaller screens
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 2000) {
+      if (window.innerWidth <= 1600) {
         setExpanded(false);
       } else {
         setExpanded(true);
@@ -134,8 +134,10 @@ export default function Sidebar({ children, addPage, pages }) {
   };
 
   const handleLogOutClick = () => {
+    localStorage.clear();
     setAnchorEl(null);
     setDialogOpen(true);
+    window.location.reload();
   };
 
   const handleDialogClose = () => {
@@ -253,7 +255,11 @@ export default function Sidebar({ children, addPage, pages }) {
   return (
     <aside
       ref={sidebarRef}
-      onMouseLeave={() => setExpanded(false)}
+      onMouseLeave={() => {
+        if (window.innerWidth <= 1600) {
+          setExpanded(false);
+        }
+      }}
       style={{
         position: "fixed",
         top: 0,
