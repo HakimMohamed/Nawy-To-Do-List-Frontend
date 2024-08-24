@@ -1,11 +1,12 @@
-/* eslint-disable no-case-declarations */
 import { useEffect, useState } from "react";
 import _ from "lodash";
 import axios from "axios";
 import demoTasks from "../_mock/demoTasks";
 
-export function useTasks({ category }) {
+export function useTasks({ category, setShowRegister }) {
+  // Accept setShowLogin as a parameter
   const [tasks, setTasks] = useState([]);
+  const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -25,62 +26,60 @@ export function useTasks({ category }) {
         setTasks(response.data.data);
       } catch (error) {
         console.log(error);
-        const filteredDemoTasks = demoTasks.filter((task) => {
-          switch (category) {
-            case "completed":
-              return task.checked;
 
-            case "today":
-              const today = new Date();
-              const taskDate = new Date(task.createdAt);
-              return (
-                taskDate.getDate() === today.getDate() &&
-                taskDate.getMonth() === today.getMonth() &&
-                taskDate.getFullYear() === today.getFullYear()
-              );
+        if (error.response.status === 401) {
+          const filteredDemoTasks = demoTasks.filter((task) => {
+            switch (category) {
+              case "completed":
+                return task.checked;
 
-            default:
-              return task;
-          }
-        });
+              case "today":
+                // eslint-disable-next-line no-case-declarations
+                const today = new Date();
+                // eslint-disable-next-line no-case-declarations
+                const taskDate = new Date(task.createdAt);
+                return (
+                  taskDate.getDate() === today.getDate() &&
+                  taskDate.getMonth() === today.getMonth() &&
+                  taskDate.getFullYear() === today.getFullYear()
+                );
 
-        setTasks(filteredDemoTasks);
-        localStorage.clear();
+              default:
+                return task;
+            }
+          });
+          setTasks(filteredDemoTasks);
+          localStorage.clear();
+        }
       }
     };
 
     fetchTasks();
 
     return () => {};
-  }, [category]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category, refresh]);
 
-  const handleTaskCheck = (isChecked, taskId) => {
-    const updatedTaskIndex = tasks.findIndex((t) => t._id === taskId);
-    const latestCheckedIndex = tasks.filter((t) => !t.checked);
-
-    const updatedTasks = _.cloneDeep(tasks);
-
-    updatedTasks[updatedTaskIndex].order = latestCheckedIndex.length;
-    updatedTasks[updatedTaskIndex].checked = isChecked;
-
-    const orderedTasks = updatedTasks
-      .map((task, index) => {
-        if (task._id !== taskId) {
-          return {
-            ...task,
-            order:
-              index === updatedTasks[updatedTaskIndex].order
-                ? updatedTasks[updatedTaskIndex].order + 1
-                : index,
-            checked: task._id === taskId ? isChecked : task.checked,
-          };
+  const handleTaskCheck = async (isChecked, taskId) => {
+    try {
+      const response = await axios.patch(
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}api/task?taskId=${taskId}`,
+        {
+          checked: isChecked,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-
-        return task;
-      })
-      .sort((a, b) => a.order - b.order);
-
-    setTasks(orderedTasks);
+      );
+      setRefresh(refresh + 1);
+      setTasks(response.data.data);
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        setShowRegister(true);
+      }
+    }
   };
 
   const handleTaskDelete = (taskIndex, taskId) => {

@@ -252,7 +252,7 @@ export default function Sidebar({ children, addPage, pages }) {
 
   return (
     <aside
-      ref={sidebarRef} // Attach the ref to the sidebar
+      ref={sidebarRef}
       onMouseLeave={() => setExpanded(false)}
       style={{
         position: "fixed",
@@ -262,7 +262,7 @@ export default function Sidebar({ children, addPage, pages }) {
         overflowY: "auto",
         backgroundColor: "white",
         zIndex: 1000,
-        overflow: "hidden",
+        overflow: "visible",
         borderRight: "1px solid #e0e0e0",
         transition: "width 0.3s",
       }}

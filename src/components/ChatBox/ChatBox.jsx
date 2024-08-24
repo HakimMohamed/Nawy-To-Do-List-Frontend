@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TextField, IconButton, Box } from "@mui/material";
 import { ArrowUpward } from "@mui/icons-material";
+import axios from "axios"; // Import axios for making the API call
 
 const SubmitInput = () => {
   const [isFocused, setIsFocused] = useState(false);
@@ -18,6 +19,29 @@ const SubmitInput = () => {
     setIsFocused(true);
   };
 
+  const handleSubmit = async () => {
+    if (inputValue.trim() === "") {
+      return;
+    }
+
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}api/task`,
+        { title: inputValue },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      setInputValue("");
+      setIsFocused(false);
+    } catch (error) {
+      console.error("Error creating task:", error);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -25,9 +49,10 @@ const SubmitInput = () => {
         bottom: "10%",
         left: "50%",
         transform: "translateX(-50%)",
-        width: "30%",
         height: "45px",
-        maxWidth: "600x",
+        width: "30vw",
+        maxWidth: "1200px",
+        minWidth: "300px",
         backgroundColor: "black",
         borderRadius: "50px",
         boxShadow: 4,
@@ -68,6 +93,11 @@ const SubmitInput = () => {
             },
           },
         }}
+        onKeyPress={(event) => {
+          if (event.key === "Enter") {
+            handleSubmit(); // Call handleSubmit when Enter key is pressed
+          }
+        }}
       />
       <IconButton
         sx={{
@@ -85,6 +115,7 @@ const SubmitInput = () => {
             transform: "scale(1.1)",
           },
         }}
+        onClick={handleSubmit} // Call handleSubmit when the button is clicked
       >
         <ArrowUpward
           sx={{
