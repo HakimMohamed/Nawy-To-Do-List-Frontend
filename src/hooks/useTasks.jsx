@@ -3,7 +3,7 @@ import _ from "lodash";
 import axios from "axios";
 import demoTasks from "../_mock/demoTasks";
 
-export function useTasks({ category, setShowRegister }) {
+export function useTasks({ category = "", setShowRegister }) {
   // Accept setShowLogin as a parameter
   const [tasks, setTasks] = useState([]);
   const [refresh, setRefresh] = useState(0);
@@ -11,7 +11,6 @@ export function useTasks({ category, setShowRegister }) {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        setTasks([]);
         const response = await axios.get(
           `${
             import.meta.env.VITE_REACT_APP_BASE_URL
@@ -22,47 +21,47 @@ export function useTasks({ category, setShowRegister }) {
             },
           }
         );
-
-        setTasks(response.data.data);
+        setTasks(response.data.data); // Ensure this data includes the newly added task
       } catch (error) {
         console.log(error);
-
-        if (error.response.status === 401) {
+        if (error.response && error.response.status === 401) {
+          // Handle unauthorized access
           const filteredDemoTasks = demoTasks.filter((task) => {
             switch (category) {
               case "completed":
                 return task.checked;
 
-              case "today":
-                // eslint-disable-next-line no-case-declarations
+              case "today": {
                 const today = new Date();
-                // eslint-disable-next-line no-case-declarations
                 const taskDate = new Date(task.createdAt);
                 return (
                   taskDate.getDate() === today.getDate() &&
                   taskDate.getMonth() === today.getMonth() &&
                   taskDate.getFullYear() === today.getFullYear()
                 );
+              }
 
               default:
                 return task;
             }
           });
           setTasks(filteredDemoTasks);
-          localStorage.clear();
+          localStorage.clear(); // Clear local storage on unauthorized access
+        } else {
+          console.error("Failed to fetch tasks:", error);
         }
       }
     };
 
     fetchTasks();
 
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {
+      // Cleanup function (optional)
+    };
   }, [category, refresh]);
-
   const handleTaskCheck = async (isChecked, taskId) => {
     try {
-      const response = await axios.patch(
+      await axios.patch(
         `${import.meta.env.VITE_REACT_APP_BASE_URL}api/task?taskId=${taskId}`,
         {
           checked: isChecked,
@@ -74,11 +73,31 @@ export function useTasks({ category, setShowRegister }) {
         }
       );
       setRefresh(refresh + 1);
-      setTasks(response.data.data);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setShowRegister(true);
       }
+    }
+  };
+
+  const addTask = async (title) => {
+    if (title.trim() === "") {
+      return;
+    }
+
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}api/task`,
+        { title },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setRefresh(refresh + 1);
+    } catch (error) {
+      console.error("Error creating task:", error);
     }
   };
 
@@ -97,5 +116,6 @@ export function useTasks({ category, setShowRegister }) {
     tasks,
     handleTaskCheck,
     handleTaskDelete,
+    addTask,
   };
 }

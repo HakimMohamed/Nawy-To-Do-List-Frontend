@@ -62,22 +62,24 @@ export default function App() {
           setShowRegister={setShowRegister}
         />
       </Router>
-      <ChatBox />
     </>
   );
 }
 
 function DynamicPage({ category, setShowRegister }) {
-  const { tasks, handleTaskCheck, handleTaskDelete } = useTasks({
+  const { tasks, handleTaskCheck, handleTaskDelete, addTask } = useTasks({
     category,
     setShowRegister,
   });
 
   return (
-    <TasksList
-      tasks={tasks}
-      onCheck={handleTaskCheck}
-      handleTaskDelete={handleTaskDelete}
-    />
+    <>
+      <ChatBox addTask={addTask} />
+      <TasksList
+        tasks={tasks}
+        onCheck={handleTaskCheck}
+        handleTaskDelete={handleTaskDelete}
+      />
+    </>
   );
 }

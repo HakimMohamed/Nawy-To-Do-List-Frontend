@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { TextField, IconButton, Box } from "@mui/material";
 import { ArrowUpward } from "@mui/icons-material";
-import axios from "axios"; // Import axios for making the API call
 
-const SubmitInput = () => {
+const SubmitInput = ({ addTask }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
@@ -19,27 +18,10 @@ const SubmitInput = () => {
     setIsFocused(true);
   };
 
-  const handleSubmit = async () => {
-    if (inputValue.trim() === "") {
-      return;
-    }
-
-    try {
-      await axios.post(
-        `${import.meta.env.VITE_REACT_APP_BASE_URL}api/task`,
-        { title: inputValue },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-
-      setInputValue("");
-      setIsFocused(false);
-    } catch (error) {
-      console.error("Error creating task:", error);
-    }
+  const handleSubmit = () => {
+    addTask(inputValue);
+    setInputValue("");
+    setIsFocused(false);
   };
 
   return (
