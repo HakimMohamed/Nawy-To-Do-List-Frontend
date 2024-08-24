@@ -43,6 +43,7 @@ const SubmitInput = ({ addTask }) => {
         alignItems: "center",
         opacity: isFocused || inputValue ? 0.8 : 0.3,
         transition: "opacity 0.3s ease",
+        zIndex: 9999,
       }}
       onMouseEnter={() => setIsFocused(true)}
       onMouseLeave={() => {

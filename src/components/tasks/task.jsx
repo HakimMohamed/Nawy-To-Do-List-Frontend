@@ -78,7 +78,7 @@ const TaskComponent = ({
   };
 
   const handleConfirmDelete = () => {
-    handleTaskDelete(index);
+    handleTaskDelete(_id);
     setOpenDialog(false);
   };
 
@@ -252,22 +252,41 @@ const TaskComponent = ({
           </MenuItem>
         </Menu>
       </Card>
-
       <Dialog open={openDialog} onClose={handleCancelDelete}>
-        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogTitle sx={{ textAlign: "left", minWidth: "400px" }}>
+          Delete Task
+        </DialogTitle>
         <DialogContent>
-          <Typography>Are you sure you want to delete this task?</Typography>
+          <Typography>{`"${title}"`}</Typography>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCancelDelete} color="primary">
-            Cancel
-          </Button>
+        <DialogActions
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            gap: "8px",
+            padding: "16px",
+          }}
+        >
           <Button
             onClick={handleConfirmDelete}
             variant="contained"
             color="error"
+            sx={{
+              alignSelf: "center",
+              minWidth: "auto",
+            }}
           >
             Delete
+          </Button>
+          <Button
+            onClick={handleCancelDelete}
+            color="primary"
+            sx={{
+              alignSelf: "center",
+              minWidth: "auto",
+            }}
+          >
+            Cancel
           </Button>
         </DialogActions>
       </Dialog>

@@ -1,15 +1,20 @@
-import { useEffect, useState } from "react";
-import _ from "lodash";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import demoTasks from "../_mock/demoTasks";
 
 export function useTasks({ category = "", setShowRegister }) {
-  // Accept setShowLogin as a parameter
   const [tasks, setTasks] = useState([]);
   const [refresh, setRefresh] = useState(0);
 
+  const prevCategoryRef = useRef(category);
+
   useEffect(() => {
     const fetchTasks = async () => {
+      if (prevCategoryRef.current !== category) {
+        setTasks([]);
+        prevCategoryRef.current = category; // Update the ref with the new category
+      }
+
       try {
         const response = await axios.get(
           `${
@@ -58,6 +63,7 @@ export function useTasks({ category = "", setShowRegister }) {
     return () => {
       // Cleanup function (optional)
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, refresh]);
   const handleTaskCheck = async (isChecked, taskId) => {
     try {
@@ -101,15 +107,20 @@ export function useTasks({ category = "", setShowRegister }) {
     }
   };
 
-  const handleTaskDelete = (taskIndex, taskId) => {
-    const updatedTasks = _.cloneDeep(tasks);
-
-    delete updatedTasks[taskIndex];
-
-    setTasks(updatedTasks);
-
-    console.log(taskId);
-    // send request to backend to remove the task
+  const handleTaskDelete = async (taskId) => {
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}api/task?taskId=${taskId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setRefresh(refresh + 1);
+    } catch (error) {
+      console.error("Error creating task:", error);
+    }
   };
 
   return {
