@@ -144,8 +144,8 @@ export default function Sidebar({ children, addPage, pages }) {
 
   const handleLogOutConfirm = () => {
     localStorage.clear();
-    window.location.reload();
     setDialogOpen(false);
+    navigate("/");
   };
 
   const renderForm = () => {
@@ -260,6 +260,7 @@ export default function Sidebar({ children, addPage, pages }) {
           setExpanded(false);
         }
       }}
+      onClick={() => setExpanded(true)}
       style={{
         position: "fixed",
         top: 0,

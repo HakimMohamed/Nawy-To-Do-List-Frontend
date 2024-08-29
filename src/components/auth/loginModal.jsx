@@ -13,7 +13,7 @@ import {
 import { Email, Lock } from "@mui/icons-material"; // Correct import for the icons
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginModal = ({ open, onClose, setShowLogin, setShowRegister }) => {
   const [email, setEmail] = useState("");
@@ -23,6 +23,7 @@ const LoginModal = ({ open, onClose, setShowLogin, setShowRegister }) => {
     password: "",
   });
   const [generalError, setGeneralError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -55,10 +56,8 @@ const LoginModal = ({ open, onClose, setShowLogin, setShowRegister }) => {
           }
         );
         onClose();
-
+        navigate("/today");
         localStorage.setItem("token", response.data.data);
-
-        window.location.reload();
       } catch (error) {
         if (error?.response?.status === 404) {
           setGeneralError("This account does not exist.");

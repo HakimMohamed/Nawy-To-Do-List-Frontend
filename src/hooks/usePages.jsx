@@ -4,7 +4,7 @@ import { Layers } from "lucide-react";
 
 const initialPages = [
   {
-    path: "/",
+    path: "/today",
     category: "today",
     sidebarItem: {
       icon: <FaRegCalendar size={20} />,

@@ -73,6 +73,9 @@ export function useTasks({ category = "", setShowRegister }) {
       );
       setRefresh(refresh + 1);
     } catch (error) {
+      if (error.response && error.response.status === 401) {
+        setShowRegister(true);
+      }
       console.error("Error creating task:", error);
     }
   };

@@ -14,6 +14,7 @@ import {
 import { AccountCircle, Email, Lock } from "@mui/icons-material";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const RegisterModal = ({ open, onClose, setShowLogin, setShowRegister }) => {
   const [name, setName] = useState("");
@@ -25,6 +26,7 @@ const RegisterModal = ({ open, onClose, setShowLogin, setShowRegister }) => {
     password: "",
   });
   const [generalError, setGeneralError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -63,8 +65,7 @@ const RegisterModal = ({ open, onClose, setShowLogin, setShowRegister }) => {
         );
         onClose();
         setGeneralError("");
-        window.location.reload();
-
+        navigate("/today");
         localStorage.setItem("token", response.data.data);
       } catch (error) {
         if (error?.response?.status === 409) {
