@@ -19,11 +19,12 @@ import {
 import { Settings, Logout } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import iconOptions from "../../icons";
+import axios from "axios";
 
 const SidebarContext = createContext();
 
 export default function Sidebar({ children, addPage, pages }) {
-  const sidebarRef = useRef(null); // Create a ref for the sidebar
+  const sidebarRef = useRef(null);
   const childrenArray = React.Children.toArray(children);
   const firstPart = childrenArray.slice(0, childrenArray.length);
   const remainingPart = childrenArray.slice(childrenArray.length);
@@ -61,7 +62,7 @@ export default function Sidebar({ children, addPage, pages }) {
     addPage(newItem);
     setNewItemName("");
     setFormVisible(false);
-    setErrorMessage(""); // Clear error message on successful addition
+    setErrorMessage("");
   };
 
   const handleIconClick = (event) => {
@@ -147,6 +148,30 @@ export default function Sidebar({ children, addPage, pages }) {
     setDialogOpen(false);
     navigate("/");
   };
+
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_BASE_URL}api/user`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setUser(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchTasks();
+
+    return () => {};
+  }, []);
 
   const renderForm = () => {
     return !formVisible ? (
@@ -303,7 +328,7 @@ export default function Sidebar({ children, addPage, pages }) {
 
         <div className="border-t flex p-3">
           <img
-            src="./vite.svg"
+            src={"./vite.svg"}
             className="w-10 h-10 rounded-md"
             alt="User Icon"
           />
@@ -313,8 +338,10 @@ export default function Sidebar({ children, addPage, pages }) {
             }`}
           >
             <div className="leading-4">
-              <h4 className="font-semibold">test</h4>
-              <span className="text-xs text-gray-600">test@gmail.com</span>
+              <h4 className="font-semibold">{user?.name || "Name"}</h4>
+              <span className="text-xs text-gray-600">
+                {user?.email || "email@example.com"}
+              </span>
             </div>
             <IconButton onClick={handleMenuOpen}>
               <MoreVertical size={20} />
