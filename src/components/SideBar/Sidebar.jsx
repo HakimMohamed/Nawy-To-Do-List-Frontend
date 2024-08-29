@@ -1,5 +1,5 @@
 import React, { createContext, useState, useRef, useEffect } from "react";
-import { LifeBuoy, MoreVertical } from "lucide-react";
+import { MoreVertical } from "lucide-react";
 import {
   Menu,
   MenuItem,
@@ -333,12 +333,6 @@ export default function Sidebar({ children, addPage, pages }) {
             <Settings fontSize="small" />
           </ListItemIcon>
           <Typography variant="inherit">Settings</Typography>
-        </MenuItem>
-        <MenuItem onClick={() => navigate("help")}>
-          <ListItemIcon>
-            <LifeBuoy fontSize="small" />
-          </ListItemIcon>
-          <Typography variant="inherit">Help</Typography>
         </MenuItem>
         <MenuItem
           onClick={handleLogOutClick}
