@@ -15,6 +15,7 @@ import {
   Popover,
   Box,
   TextField,
+  Avatar,
 } from "@mui/material";
 import { Settings, Logout } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -327,10 +328,10 @@ export default function Sidebar({ children, addPage, pages }) {
         </SidebarContext.Provider>
 
         <div className="border-t flex p-3">
-          <img
-            src={"./vite.svg"}
-            className="w-10 h-10 rounded-md"
+          <Avatar
+            src={user?.profileImage || ""} // Use user profile image if available, otherwise empty
             alt="User Icon"
+            className="w-10 h-10 rounded-md"
           />
           <div
             className={`flex justify-between items-center overflow-hidden transition-all ${
