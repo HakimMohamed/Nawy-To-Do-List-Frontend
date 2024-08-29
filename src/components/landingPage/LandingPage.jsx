@@ -76,6 +76,7 @@ function LandingPage({ setShowRegister, setShowLogin }) {
             color="primary"
             size="large"
             sx={{ mt: 4 }}
+            onClick={() => setShowRegister(true)}
           >
             Get Started
           </Button>
