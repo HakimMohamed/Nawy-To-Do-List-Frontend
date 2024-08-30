@@ -24,7 +24,7 @@ import axios from "axios";
 
 const SidebarContext = createContext();
 
-export default function Sidebar({ children, addPage, pages }) {
+export default function Sidebar({ children, addPage }) {
   const sidebarRef = useRef(null);
   const childrenArray = React.Children.toArray(children);
   const firstPart = childrenArray.slice(0, childrenArray.length);
@@ -33,37 +33,25 @@ export default function Sidebar({ children, addPage, pages }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newItemName, setNewItemName] = useState("");
-  const [selectedIcon, setSelectedIcon] = useState(iconOptions[0].icon);
+  const [selectedIcon, setSelectedIcon] = useState(iconOptions[0]);
   const [formVisible, setFormVisible] = useState(false);
   const [anchorElForm, setFormAnchor] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
-  const addSidebarItem = () => {
-    if (!newItemName.trim()) return;
-
-    const isDuplicated = pages.find(
-      (p) => p.sidebarItem.text.toLowerCase() === newItemName.toLowerCase()
-    );
-    if (isDuplicated) {
-      setErrorMessage("Error: Category already exists.");
-      return;
-    }
-
-    const newItem = {
-      path: `/${newItemName.split(" ").join("")}`,
-      category: newItemName,
-      sidebarItem: {
-        icon: selectedIcon,
+  const addSidebarItem = async () => {
+    try {
+      await addPage({
+        path: `/${newItemName.split(" ").join("")}`,
+        category: newItemName,
+        icon: { label: selectedIcon.label, id: selectedIcon.id },
         text: newItemName,
-      },
-    };
-
-    addPage(newItem);
-    setNewItemName("");
-    setFormVisible(false);
-    setErrorMessage("");
+      });
+      setErrorMessage("");
+    } catch (err) {
+      setErrorMessage(err.message);
+    }
   };
 
   const handleIconClick = (event) => {
@@ -174,6 +162,12 @@ export default function Sidebar({ children, addPage, pages }) {
     return () => {};
   }, []);
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      addSidebarItem();
+    }
+  };
+
   const renderForm = () => {
     return !formVisible ? (
       <div
@@ -191,6 +185,7 @@ export default function Sidebar({ children, addPage, pages }) {
             placeholder="Enter Collection Name"
             value={newItemName}
             onChange={(e) => setNewItemName(e.target.value)}
+            onKeyDown={handleKeyDown}
             className="border p-2 rounded w-full"
             style={{ marginBottom: "24px", maxWidth: "200px" }}
             autoComplete="off"
@@ -202,7 +197,7 @@ export default function Sidebar({ children, addPage, pages }) {
           >
             {" "}
             <IconButton onClick={handleIconClick} color="primary">
-              {selectedIcon}
+              {selectedIcon.icon}
             </IconButton>
             <button
               onClick={addSidebarItem}
@@ -250,7 +245,7 @@ export default function Sidebar({ children, addPage, pages }) {
               {iconOptions.map((option, index) => (
                 <IconButton
                   key={index}
-                  onClick={() => handleMenuItemClick(option.icon)}
+                  onClick={() => handleMenuItemClick(option)}
                   sx={{
                     display: "flex",
                     justifyContent: "center",

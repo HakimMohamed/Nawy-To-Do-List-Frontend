@@ -57,10 +57,10 @@ function AppContent({
             {pages.map((page, index) => (
               <div key={index}>
                 <SidebarItem
-                  icon={page.sidebarItem.icon}
-                  text={page.sidebarItem.text}
+                  icon={page.icon}
+                  text={page.text}
                   to={page.path}
-                  alert={page.sidebarItem.alert}
+                  alert={page.alert}
                 />
                 {index === 2 && <hr className="my-3" />}
               </div>
