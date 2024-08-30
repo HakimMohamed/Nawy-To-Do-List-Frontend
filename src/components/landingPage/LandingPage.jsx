@@ -6,8 +6,28 @@ import {
   Container,
   Box,
 } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function LandingPage({ setShowRegister, setShowLogin }) {
+  const navigate = useNavigate();
+
+  const getUser = async () =>
+    axios.get(`${import.meta.env.VITE_REACT_APP_BASE_URL}api/user`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+  const handleAuthClick = async (showModalSetter) => {
+    try {
+      await getUser();
+      navigate("/tasks");
+    } catch (error) {
+      showModalSetter(true);
+    }
+  };
+
   return (
     <div
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
@@ -28,14 +48,14 @@ function LandingPage({ setShowRegister, setShowLogin }) {
           <Button
             color="inherit"
             sx={{ color: "#333" }}
-            onClick={() => setShowLogin(true)}
+            onClick={() => handleAuthClick(setShowLogin)}
           >
             Login
           </Button>
           <Button
             color="inherit"
             sx={{ color: "#333" }}
-            onClick={() => setShowRegister(true)}
+            onClick={() => handleAuthClick(setShowRegister)}
           >
             Sign Up
           </Button>
@@ -76,7 +96,7 @@ function LandingPage({ setShowRegister, setShowLogin }) {
             color="primary"
             size="large"
             sx={{ mt: 4 }}
-            onClick={() => setShowRegister(true)}
+            onClick={() => handleAuthClick(setShowRegister)}
           >
             Get Started
           </Button>

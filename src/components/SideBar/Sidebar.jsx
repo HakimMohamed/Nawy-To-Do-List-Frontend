@@ -153,7 +153,7 @@ export default function Sidebar({ children, addPage, pages }) {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    const fetchTasks = async () => {
+    const fetchUser = async () => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_REACT_APP_BASE_URL}api/user`,
@@ -169,7 +169,7 @@ export default function Sidebar({ children, addPage, pages }) {
       }
     };
 
-    fetchTasks();
+    fetchUser();
 
     return () => {};
   }, []);
