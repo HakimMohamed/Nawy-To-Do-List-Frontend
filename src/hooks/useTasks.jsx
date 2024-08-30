@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
-export function useTasks({ category = "", setShowRegister }) {
+export function useTasks({ category = "", setShowRegister, categoryId }) {
   const [tasks, setTasks] = useState([]);
   const [refresh, setRefresh] = useState(0);
 
@@ -18,7 +18,7 @@ export function useTasks({ category = "", setShowRegister }) {
         const response = await axios.get(
           `${
             import.meta.env.VITE_REACT_APP_BASE_URL
-          }api/tasks?category=${category}`,
+          }api/tasks?category=${category}&categoryId=${categoryId}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -34,7 +34,7 @@ export function useTasks({ category = "", setShowRegister }) {
     fetchTasks();
 
     return () => {};
-  }, [category, refresh]);
+  }, [category, refresh, categoryId]);
   const handleTaskCheck = async (isChecked, taskId) => {
     try {
       await axios.patch(
@@ -64,7 +64,7 @@ export function useTasks({ category = "", setShowRegister }) {
     try {
       await axios.post(
         `${import.meta.env.VITE_REACT_APP_BASE_URL}api/task`,
-        { title },
+        { title, _category: categoryId },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

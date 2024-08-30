@@ -85,6 +85,7 @@ function AppContent({
                 element={
                   <DynamicPage
                     category={page.category}
+                    categoryId={page._id}
                     setShowRegister={setShowRegister}
                   />
                 }
@@ -109,10 +110,11 @@ function AppContent({
   );
 }
 
-function DynamicPage({ category, setShowRegister }) {
+function DynamicPage({ category, setShowRegister, categoryId }) {
   const { tasks, handleTaskCheck, handleTaskDelete, addTask } = useTasks({
     category,
     setShowRegister,
+    categoryId,
   });
 
   return (

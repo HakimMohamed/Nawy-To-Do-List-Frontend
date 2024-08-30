@@ -281,7 +281,7 @@ export default function Sidebar({ children, addPage }) {
           setExpanded(false);
         }
       }}
-      onClick={() => setExpanded(true)}
+      onDoubleClick={() => setExpanded(true)}
       style={{
         position: "fixed",
         top: 0,

@@ -6,6 +6,7 @@ import iconOptions from "../icons";
 
 const initialPages = [
   {
+    _id: 1,
     path: "/today",
     category: "today",
     icon: <FaRegCalendar size={20} />,
@@ -13,12 +14,14 @@ const initialPages = [
     alert: true,
   },
   {
+    _id: 2,
     path: "/completed",
     category: "completed",
     icon: <FaRegCheckCircle size={20} />,
     text: "Completed",
   },
   {
+    _id: 3,
     path: "/tasks",
     category: "all",
     icon: <Layers size={20} />,
