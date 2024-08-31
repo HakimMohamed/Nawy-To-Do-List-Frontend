@@ -64,7 +64,10 @@ export function useTasks({ category = "", setShowRegister, categoryId }) {
     try {
       await axios.post(
         `${import.meta.env.VITE_REACT_APP_BASE_URL}api/task`,
-        { title, _category: categoryId },
+        {
+          title,
+          _category: [1, 2, 3].includes(categoryId) ? undefined : category,
+        },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
