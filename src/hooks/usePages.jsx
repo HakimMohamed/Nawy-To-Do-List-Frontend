@@ -85,7 +85,7 @@ export const usePages = () => {
     }
   };
 
-  const removePage = async (categoryId) => {
+  const removePage = async ({ categoryId }) => {
     try {
       await axios.delete(
         `${
@@ -103,5 +103,24 @@ export const usePages = () => {
     }
   };
 
-  return { pages, addPage, removePage };
+  const updatePage = async ({ categoryId, path, category, icon, text }) => {
+    try {
+      await axios.patch(
+        `${
+          import.meta.env.VITE_REACT_APP_BASE_URL
+        }api/category?categoryId=${categoryId}`,
+        { categoryId, path, category, icon, text },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setTriggerFetch((prev) => prev + 1);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return { pages, addPage, removePage, updatePage };
 };

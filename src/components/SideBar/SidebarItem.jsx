@@ -18,7 +18,7 @@ export default function SidebarItem({
   to,
   alert,
   removePage,
-  onRename,
+  updatePage,
 }) {
   const { expanded } = useContext(SidebarContext);
   const location = useLocation();
@@ -52,7 +52,7 @@ export default function SidebarItem({
       navigate("/tasks"); // Redirect to tasks
     }
     try {
-      await removePage(categoryId);
+      await removePage({ categoryId });
     } catch (error) {
       console.error("Error Deleting Category:", error);
     }
@@ -72,8 +72,12 @@ export default function SidebarItem({
       setIsEditing(false);
 
       try {
-        await onRename(newText);
-        console.log("Name saved:", newText);
+        await updatePage({
+          categoryId,
+          path: `/${newText.split(" ").join("")}`,
+          category: newText,
+          text: newText,
+        });
       } catch (error) {
         console.error("Error saving name:", error);
       }

@@ -18,7 +18,7 @@ import LandingPage from "./components/landingPage/LandingPage";
 import ThemeProvider from "./theme";
 
 export default function App() {
-  const { pages, addPage, removePage } = usePages();
+  const { pages, addPage, removePage, updatePage } = usePages();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
 
@@ -33,6 +33,7 @@ export default function App() {
           showRegister={showRegister}
           setShowRegister={setShowRegister}
           removePage={removePage}
+          updatePage={updatePage}
         />
       </Router>
     </ThemeProvider>
@@ -47,6 +48,7 @@ function AppContent({
   showRegister,
   setShowRegister,
   removePage,
+  updatePage,
 }) {
   const location = useLocation();
   const isLandingPage = location.pathname === "/";
@@ -57,10 +59,11 @@ function AppContent({
         {location.pathname !== "/" && (
           <Sidebar addPage={addPage} pages={pages}>
             {pages.map((page, index) => (
-              <div key={index}>
+              <div key={page._id}>
                 <SidebarItem
                   icon={page.icon}
                   text={page.text}
+                  updatePage={updatePage}
                   categoryId={page._id}
                   to={page.path}
                   alert={page.alert}

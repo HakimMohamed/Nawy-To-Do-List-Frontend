@@ -74,14 +74,15 @@ function LandingPage({ setShowRegister, setShowLogin }) {
       >
         <Container>
           <Typography variant="h2" component="h1" gutterBottom>
-            Welcome to Nawah
+            Welcome to Nawy
           </Typography>
           <Typography variant="h5" component="p" gutterBottom>
-            The ultimate to-do list app to keep you organized and on track.
+            Nawy is an Arabic word that means &quot;will do it&quot;—the
+            ultimate to-do list app to keep you organized and on track.
           </Typography>
           <img
             src="/landingPage.png"
-            alt="Nawah App"
+            alt="Nawy App"
             style={{
               width: "100%",
               maxWidth: 3000,
