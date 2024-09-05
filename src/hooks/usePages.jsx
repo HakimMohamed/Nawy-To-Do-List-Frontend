@@ -30,7 +30,7 @@ const initialPages = [
 ];
 
 export const usePages = () => {
-  const [pages, setPages] = useState(initialPages);
+  const [pages, setPages] = useState([]);
   const [triggerFetch, setTriggerFetch] = useState(0);
 
   useEffect(() => {
@@ -85,5 +85,23 @@ export const usePages = () => {
     }
   };
 
-  return { pages, addPage };
+  const removePage = async (categoryId) => {
+    try {
+      await axios.delete(
+        `${
+          import.meta.env.VITE_REACT_APP_BASE_URL
+        }api/category?categoryId=${categoryId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setTriggerFetch((prev) => prev + 1);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return { pages, addPage, removePage };
 };

@@ -66,7 +66,7 @@ export function useTasks({ category = "", setShowRegister, categoryId }) {
         `${import.meta.env.VITE_REACT_APP_BASE_URL}api/task`,
         {
           title,
-          _category: [1, 2, 3].includes(categoryId) ? undefined : category,
+          _category: [1, 2, 3].includes(categoryId) ? undefined : categoryId,
         },
         {
           headers: {

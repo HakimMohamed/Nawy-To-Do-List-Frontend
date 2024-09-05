@@ -17,7 +17,7 @@ import {
   TextField,
   Avatar,
 } from "@mui/material";
-import { Settings, Logout } from "@mui/icons-material";
+import { Logout } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import iconOptions from "../../icons";
 import axios from "axios";
@@ -351,12 +351,6 @@ export default function Sidebar({ children, addPage }) {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleMenuClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          <Typography variant="inherit">Settings</Typography>
-        </MenuItem>
         <MenuItem
           onClick={handleLogOutClick}
           sx={{
