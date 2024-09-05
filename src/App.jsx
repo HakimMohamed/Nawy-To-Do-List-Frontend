@@ -118,17 +118,19 @@ function AppContent({
 }
 
 function DynamicPage({ category, setShowRegister, categoryId }) {
-  const { tasks, handleTaskCheck, handleTaskDelete, addTask } = useTasks({
-    category,
-    setShowRegister,
-    categoryId,
-  });
+  const { tasks, handleTaskCheck, handleTaskDelete, addTask, loading } =
+    useTasks({
+      category,
+      setShowRegister,
+      categoryId,
+    });
 
   return (
     <>
       <ChatBox addTask={addTask} />
       <TasksList
         tasks={tasks}
+        loading={loading}
         onCheck={handleTaskCheck}
         handleTaskDelete={handleTaskDelete}
       />

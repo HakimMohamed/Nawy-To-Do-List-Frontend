@@ -4,7 +4,7 @@ import axios from "axios";
 export function useTasks({ category = "", setShowRegister, categoryId }) {
   const [tasks, setTasks] = useState([]);
   const [refresh, setRefresh] = useState(0);
-
+  const [loading, setLoading] = useState(true);
   const prevCategoryRef = useRef(category);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export function useTasks({ category = "", setShowRegister, categoryId }) {
         setTasks([]);
         prevCategoryRef.current = category;
       }
-
+      setLoading(true);
       try {
         const response = await axios.get(
           `${
@@ -26,6 +26,7 @@ export function useTasks({ category = "", setShowRegister, categoryId }) {
           }
         );
         setTasks(response.data.data);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -104,5 +105,6 @@ export function useTasks({ category = "", setShowRegister, categoryId }) {
     handleTaskCheck,
     handleTaskDelete,
     addTask,
+    loading,
   };
 }

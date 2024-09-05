@@ -1,7 +1,9 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Fade } from "@mui/material";
 import Task from "./task";
 
-export function TasksList({ tasks, onCheck, handleTaskDelete }) {
+export function TasksList({ tasks, onCheck, handleTaskDelete, loading }) {
+  const showNoTasksMessage = !loading && tasks && tasks.length === 0;
+
   return (
     <Box
       sx={{
@@ -12,20 +14,23 @@ export function TasksList({ tasks, onCheck, handleTaskDelete }) {
         alignItems: "center", // Center the content
       }}
     >
-      {tasks && tasks.length > 0 ? (
-        tasks.map((task, index) => (
-          <Task
-            key={task._id}
-            _id={task._id}
-            title={task.title}
-            createdAt={task.createdAt}
-            isChecked={task.checked}
-            onCheck={onCheck}
-            index={index}
-            handleTaskDelete={handleTaskDelete}
-          />
-        ))
-      ) : (
+      {tasks && tasks.length > 0
+        ? tasks.map((task, index) => (
+            <Task
+              key={task._id}
+              _id={task._id}
+              title={task.title}
+              createdAt={task.createdAt}
+              isChecked={task.checked}
+              onCheck={onCheck}
+              index={index}
+              handleTaskDelete={handleTaskDelete}
+            />
+          ))
+        : null}
+
+      {/* Fade in the "No tasks" message when there are no tasks */}
+      <Fade in={showNoTasksMessage} timeout={500}>
         <Box
           sx={{
             textAlign: "center",
@@ -42,7 +47,7 @@ export function TasksList({ tasks, onCheck, handleTaskDelete }) {
             Start adding your tasks and stay organized.
           </Typography>
         </Box>
-      )}
+      </Fade>
     </Box>
   );
 }
