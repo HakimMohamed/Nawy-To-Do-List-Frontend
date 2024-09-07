@@ -1,4 +1,3 @@
-Certainly! Here is the "Credits" section for your README file, specifically focusing on mentioning the use of someone else's icon:
 
 ```markdown
 ## Credits
