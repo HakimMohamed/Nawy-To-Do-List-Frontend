@@ -34,10 +34,10 @@ const RegisterModal = ({
     password: "",
   });
   const [generalError, setGeneralError] = useState("");
-
+  const [isRegistering, setIsRegistering] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setIsRegistering(true);
     let isValid = true;
     let newErrors = { name: "", email: "", password: "" };
     setGeneralError("");
@@ -80,9 +80,13 @@ const RegisterModal = ({
           );
         } else if (error?.response?.status === 409) {
           setGeneralError("This account already exists.");
+        } else if (error?.response?.status === 403) {
+          setGeneralError(error.response.data.message);
         } else {
           setGeneralError("An unexpected error occurred. Please try again.");
         }
+      } finally {
+        setIsRegistering(false);
       }
     }
   };
@@ -181,8 +185,9 @@ const RegisterModal = ({
             variant="contained"
             color="primary"
             sx={{ mt: 3, mb: 2 }}
+            disabled={isRegistering}
           >
-            Register
+            {isRegistering ? "Register..." : "Register"}
           </Button>
 
           <Button fullWidth variant="outlined" color="secondary" sx={{ mb: 2 }}>

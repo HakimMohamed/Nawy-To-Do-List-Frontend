@@ -28,8 +28,6 @@ export function TasksList({ tasks, onCheck, handleTaskDelete, loading }) {
             />
           ))
         : null}
-
-      {/* Fade in the "No tasks" message when there are no tasks */}
       <Fade in={showNoTasksMessage} timeout={500}>
         <Box
           sx={{

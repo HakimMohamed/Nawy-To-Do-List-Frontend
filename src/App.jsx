@@ -19,7 +19,7 @@ import ThemeProvider from "./theme";
 import OtpDialog from "./components/auth/OtpDialog";
 
 export default function App() {
-  const { pages, addPage, removePage, updatePage } = usePages();
+  const { pages, addPage, removePage, updatePage, fetchPages } = usePages();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
@@ -29,6 +29,7 @@ export default function App() {
       <Router>
         <AppContent
           pages={pages}
+          fetchPages={fetchPages}
           addPage={addPage}
           showLogin={showLogin}
           setShowLogin={setShowLogin}
@@ -55,6 +56,7 @@ function AppContent({
   updatePage,
   setShowOtp,
   showOtp,
+  fetchPages,
 }) {
   const location = useLocation();
   const isLandingPage = location.pathname === "/";
@@ -112,13 +114,19 @@ function AppContent({
       </div>
       <LoginModal
         open={showLogin}
-        onClose={() => setShowLogin(false)}
+        onClose={() => {
+          setShowLogin(false);
+          fetchPages((prev) => prev + 1);
+        }}
         setShowLogin={setShowLogin}
         setShowRegister={setShowRegister}
       />
       <RegisterModal
         open={showRegister}
-        onClose={() => setShowRegister(false)}
+        onClose={() => {
+          setShowRegister(false);
+          fetchPages((prev) => prev + 1);
+        }}
         setShowLogin={setShowLogin}
         setShowRegister={setShowRegister}
         setShowOtp={setShowOtp}

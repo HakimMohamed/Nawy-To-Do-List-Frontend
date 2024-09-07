@@ -122,5 +122,11 @@ export const usePages = () => {
     }
   };
 
-  return { pages, addPage, removePage, updatePage };
+  return {
+    pages,
+    addPage,
+    removePage,
+    updatePage,
+    fetchPages: setTriggerFetch,
+  };
 };
