@@ -14,26 +14,33 @@ import {
 import { AccountCircle, Email, Lock } from "@mui/icons-material";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-const RegisterModal = ({ open, onClose, setShowLogin, setShowRegister }) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const RegisterModal = ({
+  open,
+  onClose,
+  setShowLogin,
+  setShowRegister,
+  setShowOtp,
+  email,
+  setEmail,
+  password,
+  setPassword,
+  name,
+  setName,
+}) => {
   const [errors, setErrors] = useState({
     name: "",
     email: "",
     password: "",
   });
   const [generalError, setGeneralError] = useState("");
-  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     let isValid = true;
     let newErrors = { name: "", email: "", password: "" };
-    setGeneralError(""); // Reset general error before validation
+    setGeneralError("");
 
     if (!name.trim()) {
       newErrors.name = "Name is required";
@@ -55,7 +62,7 @@ const RegisterModal = ({ open, onClose, setShowLogin, setShowRegister }) => {
 
     if (isValid) {
       try {
-        const response = await axios.post(
+        await axios.post(
           `${import.meta.env.VITE_REACT_APP_BASE_URL}api/user/register`,
           {
             email,
@@ -65,10 +72,13 @@ const RegisterModal = ({ open, onClose, setShowLogin, setShowRegister }) => {
         );
         onClose();
         setGeneralError("");
-        navigate("/today");
-        localStorage.setItem("token", response.data.data);
+        setShowOtp(true);
       } catch (error) {
-        if (error?.response?.status === 409) {
+        if (error?.response?.status === 425) {
+          setGeneralError(
+            "Your Block For 10 minutes due to too many failed otps."
+          );
+        } else if (error?.response?.status === 409) {
           setGeneralError("This account already exists.");
         } else {
           setGeneralError("An unexpected error occurred. Please try again.");
