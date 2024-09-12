@@ -11,6 +11,7 @@ Vectors and icons by <a href="https://www.figma.com/@salahelimam?ref=svgrepo.com
 
 - **Icon Attribution**: Clearly credit the icon creator with their name and a link to their profile or website, along with the platform where the icon was sourced.
 - **Contributors**: List the main contributors to the project with links to their GitHub profiles.
-
-Replace the placeholders with the actual names and links relevant to your project.
 ```
+
+
+https://www.nawy-todo.com/
