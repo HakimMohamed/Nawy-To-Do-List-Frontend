@@ -30,7 +30,7 @@ const initialPages = [
 ];
 
 export const usePages = () => {
-  const [pages, setPages] = useState([]);
+  const [pages, setPages] = useState(initialPages);
   const [triggerFetch, setTriggerFetch] = useState(0);
 
   useEffect(() => {
