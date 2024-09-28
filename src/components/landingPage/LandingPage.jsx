@@ -184,7 +184,7 @@ function LandingPage({ setShowRegister, setShowLogin }) {
           >
             Created by{" "}
             <a
-              href="https://github.com/hakim"
+              href="https://github.com/HakimMohamed"
               target="_blank"
               rel="noopener noreferrer"
               style={{
