@@ -42,7 +42,7 @@ function LandingPage({ setShowRegister, setShowLogin }) {
         />
         <meta
           name="keywords"
-          content="to-do list app, task manager, productivity app, task management, Nawy, organize tasks, to-do, list, task manager"
+          content="to-do list app, task manager, productivity app, task management, Nawy, organize tasks, to-do, list, task manager, nawy"
         />
         <meta name="author" content="Nawy" />
         <meta
