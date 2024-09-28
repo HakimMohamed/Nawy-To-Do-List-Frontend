@@ -7,6 +7,7 @@ import {
   Box,
 } from "@mui/material";
 import axios from "axios";
+import { Helmet } from "react-helmet"; // Import react-helmet
 import { useNavigate } from "react-router-dom";
 
 function LandingPage({ setShowRegister, setShowLogin }) {
@@ -32,6 +33,40 @@ function LandingPage({ setShowRegister, setShowLogin }) {
     <div
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
+      {/* SEO Meta Tags */}
+      <Helmet>
+        <title>Nawy - The Ultimate To-Do List App</title>
+        <meta
+          name="description"
+          content="Nawy is the ultimate to-do list app that helps you stay organized and productive, designed to track your tasks and manage your day efficiently."
+        />
+        <meta
+          name="keywords"
+          content="to-do list app, task manager, productivity app, task management, Nawy, organize tasks, to-do, list, task manager"
+        />
+        <meta name="author" content="Nawy" />
+        <meta
+          property="og:title"
+          content="Nawy - The Ultimate To-Do List App"
+        />
+        <meta
+          property="og:description"
+          content="Nawy is a to-do list app designed to help you organize your day and manage tasks efficiently."
+        />
+        <meta property="og:image" content="/landingPage.png" />
+        <meta property="og:url" content="https://www.nawy-todo.com" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Nawy - The Ultimate To-Do List App"
+        />
+        <meta
+          name="twitter:description"
+          content="Get organized and boost productivity with Nawy, the best to-do list app."
+        />
+        <meta name="twitter:image" content="/landingPage.png" />
+      </Helmet>
+
       {/* Navbar */}
       <AppBar position="static" sx={{ bgcolor: "#EFE6CD" }}>
         <Toolbar>

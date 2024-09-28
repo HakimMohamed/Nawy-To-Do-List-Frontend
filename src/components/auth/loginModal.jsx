@@ -147,10 +147,10 @@ const LoginModal = ({ open, onClose, setShowLogin, setShowRegister }) => {
           >
             Login
           </Button>
-
+          {/* 
           <Button fullWidth variant="outlined" color="secondary" sx={{ mb: 2 }}>
             Continue as Guest
-          </Button>
+          </Button> */}
 
           <Typography variant="body2" color="textSecondary" sx={{ mt: 2 }}>
             Don&apos;t have an account?{" "}

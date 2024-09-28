@@ -189,10 +189,10 @@ const RegisterModal = ({
           >
             {isRegistering ? "Register..." : "Register"}
           </Button>
-
+          {/* 
           <Button fullWidth variant="outlined" color="secondary" sx={{ mb: 2 }}>
             Continue as Guest
-          </Button>
+          </Button> */}
 
           <Typography variant="body2" sx={{ mt: 2, textAlign: "center" }}>
             Already a member?{" "}
