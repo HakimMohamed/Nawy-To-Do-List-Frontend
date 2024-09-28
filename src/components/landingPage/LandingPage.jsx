@@ -143,9 +143,10 @@ function LandingPage({ setShowRegister, setShowLogin }) {
           About Us
         </Typography>
         <Typography variant="body1" component="p" gutterBottom>
-          Nawah is your go-to app for managing tasks efficiently. Whether
+          Nawy-to-do is your go-to app for managing tasks efficiently. Whether
           you&apos;re planning your day, organizing projects, or just jotting
-          down ideas, Nawah provides the best solutions to keep you productive.
+          down ideas, Nawy-to-do provides the best solutions to keep you
+          productive.
         </Typography>
       </Container>
 
@@ -169,7 +170,7 @@ function LandingPage({ setShowRegister, setShowLogin }) {
               fontSize: "1rem",
             }}
           >
-            © 2024 Nawah. All rights reserved.
+            © 2024 Nawy-to-to. All rights reserved.
           </Typography>
           <Typography
             variant="body2"
