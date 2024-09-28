@@ -9,6 +9,7 @@ import {
 import axios from "axios";
 import { Helmet } from "react-helmet"; // Import react-helmet
 import { useNavigate } from "react-router-dom";
+import { GitHub } from "@mui/icons-material"; // Import GitHub icon from MUI
 
 function LandingPage({ setShowRegister, setShowLogin }) {
   const navigate = useNavigate();
@@ -66,7 +67,6 @@ function LandingPage({ setShowRegister, setShowLogin }) {
         />
         <meta name="twitter:image" content="/landingPage.png" />
       </Helmet>
-
       {/* Navbar */}
       <AppBar position="static" sx={{ bgcolor: "#EFE6CD" }}>
         <Toolbar>
@@ -96,7 +96,6 @@ function LandingPage({ setShowRegister, setShowLogin }) {
           </Button>
         </Toolbar>
       </AppBar>
-
       {/* Hero Section */}
       <Box
         sx={{
@@ -138,7 +137,6 @@ function LandingPage({ setShowRegister, setShowLogin }) {
           </Button>
         </Container>
       </Box>
-
       {/* Content Section */}
       <Container sx={{ py: 8 }}>
         <Typography variant="h4" component="h2" gutterBottom>
@@ -151,19 +149,67 @@ function LandingPage({ setShowRegister, setShowLogin }) {
         </Typography>
       </Container>
 
-      {/* Sticky Footer */}
       <Box
         sx={{
-          bgcolor: "#EFE6CD", // Matching the navbar color
+          bgcolor: "#EFE6CD",
           color: "white",
-          py: 2,
+          py: 4,
           textAlign: "center",
           mt: "auto",
+          boxShadow: "0 -4px 8px rgba(0, 0, 0, 0.1)",
         }}
       >
         <Container>
-          <Typography variant="body2" component="p" sx={{ color: "#333" }}>
+          <Typography
+            variant="body2"
+            component="p"
+            sx={{
+              color: "#333",
+              mb: 1,
+              fontSize: "1rem",
+            }}
+          >
             © 2024 Nawah. All rights reserved.
+          </Typography>
+          <Typography
+            variant="body2"
+            component="p"
+            sx={{
+              color: "#333",
+              fontSize: "1rem",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            Created by{" "}
+            <a
+              href="https://github.com/hakim"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                color: "#333",
+                textDecoration: "none",
+                fontWeight: "bold",
+                marginLeft: "5px",
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.color = "#0073e6")}
+              onMouseOut={(e) => (e.currentTarget.style.color = "#333")}
+            >
+              Hakim
+              <GitHub
+                sx={{
+                  fontSize: 24,
+                  color: "#333",
+                  ml: 1,
+                  "&:hover": {
+                    color: "#0073e6",
+                  },
+                }}
+              />
+            </a>
           </Typography>
         </Container>
       </Box>
